@@ -36,31 +36,40 @@ public class SecurityConfig {
                         // 인증 없이 접근 가능한 엔드포인트
                         .requestMatchers("/api/v1/auth/**").permitAll()
                         .requestMatchers("/actuator/**").permitAll()
-                        .requestMatchers("/h2-console/**").permitAll()
+                        .requestMatchers("/api/v1/shelters/**").permitAll()
                         
                         // 사용자 관련 API는 인증 필요 (현재는 컨트롤러에서 수동 검증)
                         .requestMatchers("/api/v1/users/**").permitAll()
                         
                         // 그 외 모든 요청 허용
                         .anyRequest().permitAll()
-                )
-                
-                // H2 콘솔 사용을 위한 설정
-                .headers(headers -> headers.frameOptions().disable());
+                );
 
         return http.build();
     }
 
+    /**
+     * CORS 설정
+     */
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
+        
+        // 허용할 Origin 설정 (프론트엔드 도메인)
         configuration.setAllowedOriginPatterns(List.of("*"));
+        
+        // 허용할 HTTP 메서드
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
+        
+        // 허용할 헤더
         configuration.setAllowedHeaders(List.of("*"));
+        
+        // 인증 정보 포함 허용
         configuration.setAllowCredentials(true);
-
+        
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
+        
         return source;
     }
 } 

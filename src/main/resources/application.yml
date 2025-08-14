@@ -4,43 +4,22 @@ server:
 spring:
   application:
     name: lucky-b-key
-
+  
   datasource:
-    # H2 in-memory database for testing
-    url: jdbc:h2:mem:testdb
-    username: sa
-    password: 
-    driver-class-name: org.h2.Driver
-    # PostgreSQL for production
-    # url: jdbc:postgresql://localhost:5432/lucky_b_key
-    # username: ${DB_USERNAME:postgres}
-    # password: ${DB_PASSWORD:password}
-    # driver-class-name: org.postgresql.Driver
-
+    url: jdbc:mariadb://localhost:3306/lucky_b_key?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Seoul
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:password}
+    driver-class-name: org.mariadb.jdbc.Driver
+  
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     show-sql: true
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.H2Dialect
+        dialect: org.hibernate.dialect.MariaDBDialect
         format_sql: true
-    defer-datasource-initialization: true
-
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
-
-  security:
-    oauth2:
-      client:
-        provider:
-          kakao:
-            authorization-uri: https://kauth.kakao.com/oauth/authorize
-            token-uri: https://kauth.kakao.com/oauth/token
-            user-info-uri: https://kapi.kakao.com/v2/user/me
-            user-name-attribute: id
+    defer-datasource-initialization: false
 
 # JWT 설정
 jwt:
@@ -50,5 +29,5 @@ jwt:
 # 로깅 설정
 logging:
   level:
-    com.luckyb: DEBUG
-    org.springframework.security: DEBUG 
+    com.luckyb: debug
+    org.springframework.security: debug 

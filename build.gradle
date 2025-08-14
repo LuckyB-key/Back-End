@@ -32,9 +32,8 @@ dependencies {
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.3'
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.3'
     
-    // Database
-    runtimeOnly 'org.postgresql:postgresql'
-    runtimeOnly 'com.h2database:h2'
+    // Database - MariaDB
+    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
     
     // Development tools
     compileOnly 'org.projectlombok:lombok'
@@ -44,6 +43,8 @@ dependencies {
     // Test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
+    // H2 for testing only
+    testRuntimeOnly 'com.h2database:h2'
 }
 
 tasks.named('test') {

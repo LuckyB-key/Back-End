@@ -6,7 +6,7 @@ Lucky B-Key는 AI 기반 폭염 대응 쉼터 추천 및 관리를 위한 Spring
 
 - **Framework**: Spring Boot 3.2.1
 - **Language**: Java 17
-- **Database**: H2 (개발/테스트), PostgreSQL (운영)
+- **Database**: MariaDB (운영), H2 (테스트)
 - **ORM**: JPA/Hibernate
 - **Security**: Spring Security + JWT
 - **Build Tool**: Gradle
@@ -29,34 +29,62 @@ Lucky B-Key는 AI 기반 폭염 대응 쉼터 추천 및 관리를 위한 Spring
 
 ## 🔧 설정 및 실행
 
-### 1. 개발 환경 (H2 Database)
+### 1. 데이터베이스 설정 (MariaDB)
 
-현재 설정은 H2 인메모리 데이터베이스를 사용하여 별도 설정 없이 바로 실행 가능합니다.
+MariaDB 설치 후 데이터베이스를 생성합니다:
+
+```sql
+-- MariaDB 접속
+mysql -u root -p
+
+-- 데이터베이스 생성
+CREATE DATABASE lucky_b_key CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- 사용자 생성 및 권한 부여 (선택사항)
+CREATE USER 'luckyb'@'localhost' IDENTIFIED BY 'your_password';
+GRANT ALL PRIVILEGES ON lucky_b_key.* TO 'luckyb'@'localhost';
+FLUSH PRIVILEGES;
+```
+
+### 2. 환경 변수 설정
+
+다음 환경 변수를 설정하거나 application.yml의 기본값을 사용:
+
+```bash
+export DB_USERNAME=root
+export DB_PASSWORD=your_mariadb_password
+export JWT_SECRET=your_jwt_secret_key_min_512_bits
+```
+
+### 3. 애플리케이션 실행
 
 ```bash
 # 애플리케이션 실행
 ./gradlew bootRun
+
+# 또는 JAR 파일 빌드 후 실행
+./gradlew build
+java -jar build/libs/lucky-b-key-0.0.1-SNAPSHOT.jar
 ```
 
-H2 콘솔: http://localhost:8080/h2-console
+### 4. 테스트 환경 실행
+
+테스트 환경에서는 H2 인메모리 데이터베이스를 사용합니다:
+
+```bash
+# 테스트 프로파일로 실행
+./gradlew bootRun --args='--spring.profiles.active=test'
+```
+
+테스트 환경 H2 콘솔: http://localhost:8080/h2-console
 - **JDBC URL**: `jdbc:h2:mem:testdb`
 - **Username**: `sa`
 - **Password**: (공백)
 
-### 2. 운영 환경 (PostgreSQL)
-
-application.yml에서 PostgreSQL 설정을 활성화하고 환경 변수를 설정:
-
-```bash
-export DB_USERNAME=postgres
-export DB_PASSWORD=your_password
-export JWT_SECRET=your_jwt_secret_key_min_512_bits
-```
-
-### 3. 애플리케이션 접속
+### 5. 애플리케이션 접속
 
 - **API 서버**: http://localhost:8080
-- **H2 콘솔**: http://localhost:8080/h2-console (개발환경)
+- **H2 콘솔**: http://localhost:8080/h2-console (테스트 환경만)
 
 ## 📖 API 개요
 
