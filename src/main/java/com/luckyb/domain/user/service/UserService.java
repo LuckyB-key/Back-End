@@ -51,7 +51,7 @@ public class UserService {
             throw new IllegalArgumentException(ErrorCode.DUPLICATE_EMAIL.getMessage() + ": " + request.getEmail());
         }
 
-        user.updateInfo(request.getNickname(), request.getEmail(), request.getPreferences());
+        user.updateInfo(request.getNickname(), request.getEmail(), request.getRole(), request.getPreferences());
         User savedUser = userRepository.save(user);
 
         log.info("사용자 정보가 수정되었습니다. userId: {}", userId);

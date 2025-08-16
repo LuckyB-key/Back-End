@@ -6,9 +6,9 @@ spring:
     name: lucky-b-key
   
   datasource:
-    url: jdbc:mariadb://localhost:3306/lucky_b_key?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Seoul
+    url: jdbc:mariadb://localhost:3306/lucky_b_key?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&useLegacyDatetimeCode=false&serverRsaPublicKeyFile=
     username: ${DB_USERNAME:root}
-    password: ${DB_PASSWORD:password}
+    password: ${DB_PASSWORD:}
     driver-class-name: org.mariadb.jdbc.Driver
   
   jpa:
@@ -20,6 +20,18 @@ spring:
         dialect: org.hibernate.dialect.MariaDBDialect
         format_sql: true
     defer-datasource-initialization: false
+  
+  # Spring Security 설정
+  security:
+    web:
+      firewalls:
+        strict-http-firewall:
+          allow-url-encoded-slash: true
+          allow-semicolon: true
+          allow-backslash: true
+          allow-url-encoded-double-slash: true
+          allow-url-encoded-percent: true
+          allow-url-encoded-period: true
 
 # JWT 설정
 jwt:

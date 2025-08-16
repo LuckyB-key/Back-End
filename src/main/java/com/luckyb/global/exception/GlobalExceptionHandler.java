@@ -45,6 +45,16 @@ public class GlobalExceptionHandler {
     }
 
     /**
+     * CouponNotFoundException 처리
+     */
+    @ExceptionHandler(CouponNotFoundException.class)
+    public ResponseEntity<ApiResponse<Void>> handleCouponNotFoundException(CouponNotFoundException e) {
+        log.error("CouponNotFoundException: {}", e.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(ApiResponse.error(e.getMessage()));
+    }
+
+    /**
      * IllegalArgumentException 처리
      */
     @ExceptionHandler(IllegalArgumentException.class)
