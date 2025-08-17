@@ -27,6 +27,11 @@ Lucky B-Key는 AI 기반 폭염 대응 쉼터 추천 및 관리를 위한 Spring
 - **UUID 기반 인증**: 간편한 사용자 등록 및 로그인
 - **개인화 서비스**: 사용자 선호도 기반 맞춤 추천
 
+### 🎫 쿠폰 시스템
+- **쿠폰 등록/관리**: 비즈니스 사용자용 쿠폰 등록 및 관리
+- **쿠폰 발급/사용**: 사용자 쿠폰 발급 및 사용 처리
+- **쿠폰 조회**: 개인 쿠폰 및 비즈니스 쿠폰 목록 조회
+
 ## 🔧 설정 및 실행
 
 ### 1. 데이터베이스 설정 (MariaDB)
@@ -46,15 +51,29 @@ GRANT ALL PRIVILEGES ON lucky_b_key.* TO 'luckyb'@'localhost';
 FLUSH PRIVILEGES;
 ```
 
+**💡 데이터베이스 URL 최적화:**
+- 기본 URL: `jdbc:mariadb://localhost:3306/lucky_b_key?serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true`
+- 필수 보안 파라미터만 유지하여 안정성 확보
+- Spring Boot 자동 설정으로 대부분의 옵션이 자동 처리됨
+
 ### 2. 환경 변수 설정
 
 다음 환경 변수를 설정하거나 application.yml의 기본값을 사용:
 
 ```bash
+# 데이터베이스 설정
 export DB_USERNAME=root
 export DB_PASSWORD=your_mariadb_password
-export JWT_SECRET=your_jwt_secret_key_min_512_bits
+
+# JWT 보안 키 (최소 512비트 필수 - HS512 알고리즘 요구사항)
+export JWT_SECRET=your_super_secret_jwt_key_here_make_it_at_least_512_bits_long_for_hs512_algorithm_security_requirement
 ```
+
+**⚠️ 보안 주의사항:**
+- 프로덕션 환경에서는 반드시 환경변수로 JWT_SECRET을 설정하세요
+- JWT_SECRET은 최소 512비트(64바이트) 이상이어야 HS512 알고리즘이 정상 작동합니다
+- 기본값은 개발용이므로 프로덕션에서는 사용하지 마세요
+- DB_PASSWORD는 반드시 강력한 비밀번호를 사용하세요
 
 ### 3. 애플리케이션 실행
 
@@ -102,6 +121,22 @@ java -jar build/libs/lucky-b-key-0.0.1-SNAPSHOT.jar
 - `PUT /api/v1/shelters/{id}` - 쉼터 수정
 - `DELETE /api/v1/shelters/{id}` - 쉼터 삭제
 
+### 📢 공지사항 API
+- `GET /api/v1/announcements` - 공지사항 목록 조회 (페이징)
+- `POST /api/v1/announcements` - 공지사항 등록
+- `GET /api/v1/announcements/{id}` - 공지사항 상세 조회
+- `PUT /api/v1/announcements/{id}` - 공지사항 수정
+- `DELETE /api/v1/announcements/{id}` - 공지사항 삭제
+
+### 🎫 쿠폰 API
+- `GET /api/v1/coupons` - 쿠폰 목록 조회
+- `POST /api/v1/coupons` - 쿠폰 등록 (비즈니스 사용자)
+- `GET /api/v1/coupons/{id}` - 쿠폰 상세 조회
+- `GET /api/v1/coupons/my-business` - 내가 발행한 쿠폰 목록
+- `GET /api/v1/coupons/my-coupons` - 내 쿠폰 목록
+- `POST /api/v1/coupons/{id}/issue` - 쿠폰 발급
+- `POST /api/v1/coupons/{id}/use` - 쿠폰 사용
+
 ### 🤖 AI 기능 API
 - `GET /api/v1/shelters/recommendations` - AI 쉼터 추천
 - `GET /api/v1/shelters/{id}/congestion` - 혼잡도 예측
@@ -113,6 +148,8 @@ java -jar build/libs/lucky-b-key-0.0.1-SNAPSHOT.jar
 - [인증 도메인](src/main/java/com/luckyb/domain/auth/README.md) - 인증 관련 API
 - [사용자 도메인](src/main/java/com/luckyb/domain/user/README.md) - 사용자 관리 API  
 - [쉼터 도메인](src/main/java/com/luckyb/domain/shelter/README.md) - 쉼터 관리 및 AI 기능 API
+- [공지사항 도메인](src/main/java/com/luckyb/domain/announcement/README.md) - 공지사항 관리 API
+- [쿠폰 도메인](src/main/java/com/luckyb/domain/coupon/README.md) - 쿠폰 관리 API
 
 ## 🗂️ 프로젝트 구조
 
@@ -122,7 +159,9 @@ src/main/java/com/luckyb/
 ├── domain/
 │   ├── auth/                 # 인증 도메인
 │   ├── user/                 # 사용자 도메인
-│   └── shelter/              # 쉼터 도메인
+│   ├── shelter/              # 쉼터 도메인
+│   ├── announcement/         # 공지사항 도메인
+│   └── coupon/               # 쿠폰 도메인
 └── global/
     ├── common/               # 공통 응답 형식
     ├── config/               # 설정 클래스

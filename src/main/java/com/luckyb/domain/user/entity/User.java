@@ -75,12 +75,15 @@ public class User {
     }
 
     // 정보 수정 메서드
-    public void updateInfo(String nickname, String email, List<String> preferences) {
+    public void updateInfo(String nickname, String email, String role, List<String> preferences) {
         if (nickname != null) {
             this.nickname = nickname;
         }
         if (email != null) {
             this.email = email;
+        }
+        if (role != null) {
+            this.role = UserRole.fromValue(role);
         }
         if (preferences != null) {
             this.preferences = new ArrayList<>(preferences);

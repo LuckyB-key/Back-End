@@ -32,6 +32,17 @@ public enum ErrorCode {
     INVALID_ADVERTISEMENT_INPUT("AD005", "광고 입력값이 올바르지 않습니다"),
 
     
+    // 쿠폰 관련 에러
+    COUPON_NOT_FOUND("C001", "쿠폰을 찾을 수 없습니다"),
+    COUPON_EXPIRED("C002", "만료된 쿠폰입니다"),
+    COUPON_ALREADY_USED("C003", "이미 사용된 쿠폰입니다"),
+    COUPON_ALREADY_ISSUED("C004", "이미 발급받은 쿠폰입니다"),
+    COUPON_CREATION_FAILED("C005", "쿠폰 생성에 실패했습니다"),
+    COUPON_UPDATE_FAILED("C006", "쿠폰 수정에 실패했습니다"),
+    COUPON_DELETE_FAILED("C007", "쿠폰 삭제에 실패했습니다"),
+    COUPON_ISSUE_FAILED("C008", "쿠폰 발급에 실패했습니다"),
+    INVALID_BUSINESS_USER("C009", "비즈니스 사용자만 쿠폰을 등록할 수 있습니다"),
+    
     // 시스템 에러
     INTERNAL_SERVER_ERROR("S001", "서버 내부 오류가 발생했습니다"),
     INVALID_INPUT("S002", "입력값이 올바르지 않습니다");

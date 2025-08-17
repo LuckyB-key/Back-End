@@ -45,6 +45,7 @@
 {
   "nickname": "새로운닉네임",
   "email": "newemail@example.com",
+  "role": "business",
   "preferences": ["에어컨", "WiFi", "화장실", "정수기"]
 }
 ```
@@ -57,12 +58,18 @@
     "userId": "06ebe902-0295-4488-852d-b130da17df94",
     "nickname": "새로운닉네임",
     "email": "newemail@example.com",
-    "role": "user",
+    "role": "business",
     "preferences": ["에어컨", "WiFi", "화장실", "정수기"]
   },
   "message": null
 }
 ```
+
+**요청 필드 설명:**
+- `nickname` (선택): 변경할 닉네임
+- `email` (선택): 변경할 이메일 주소
+- `role` (선택): 변경할 사용자 역할 (`user`, `business`, `admin`)
+- `preferences` (선택): 사용자 선호도 목록
 
 ## 🏗️ 구조
 
