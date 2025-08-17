@@ -1,30 +1,21 @@
 package com.luckyb.domain.shelter.dto;
 
-import com.luckyb.domain.shelter.entity.Shelter;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Getter
+@Builder
+@NoArgsConstructor
 @AllArgsConstructor
 public class ShelterRecommendationResponse {
-    
     private String id;
     private String name;
-    private Double distance;
+    private double distance;
     private String status;
     private List<String> facilities;
     private String predictedCongestion;
-    
-    public static ShelterRecommendationResponse from(Shelter shelter, Double distance, String predictedCongestion) {
-        return new ShelterRecommendationResponse(
-            shelter.getShelterId(),
-            shelter.getName(),
-            distance,
-            shelter.getStatus().getValue(),
-            shelter.getFacilities(),
-            predictedCongestion
-        );
-    }
 } 

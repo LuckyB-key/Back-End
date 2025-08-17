@@ -14,8 +14,8 @@ Lucky B-Key는 AI 기반 폭염 대응 쉼터 추천 및 관리를 위한 Spring
 ## 🌟 주요 기능
 
 ### 🤖 AI 기반 기능
-- **스마트 쉼터 추천**: 거리, 편의시설, 용량, 혼잡도를 종합한 AI 추천
-- **혼잡도 예측**: 시간대, 요일, 계절별 패턴 분석을 통한 혼잡도 예측
+- **스마트 쉼터 추천**: OpenAI 기반 거리, 편의시설, 용량, 혼잡도를 종합한 AI 추천
+- **혼잡도 예측**: OpenAI 기반 시간대, 요일, 계절별 패턴 분석을 통한 혼잡도 예측
 - **위치 기반 서비스**: 하버사인 공식을 활용한 정확한 거리 계산
 
 ### 🏠 쉼터 관리
@@ -67,11 +67,28 @@ export DB_PASSWORD=your_mariadb_password
 
 # JWT 보안 키 (최소 512비트 필수 - HS512 알고리즘 요구사항)
 export JWT_SECRET=your_super_secret_jwt_key_here_make_it_at_least_512_bits_long_for_hs512_algorithm_security_requirement
+
+# OpenAI API 키 (AI 기능 사용 시 필수)
+export OPENAI_API_KEY=your_openai_api_key_here
+```
+
+#### .env 파일 사용 (권장)
+프로젝트 루트에 `.env` 파일을 생성하고 환경 변수를 설정할 수 있습니다:
+
+```bash
+# .env 파일 예시
+DB_USERNAME=root
+DB_PASSWORD=your_mariadb_password
+JWT_SECRET=your_super_secret_jwt_key_here_make_it_at_least_512_bits_long_for_hs512_algorithm_security_requirement
+OPENAI_API_KEY=your_openai_api_key_here
 ```
 
 **⚠️ 보안 주의사항:**
+- `.env` 파일은 `.gitignore`에 포함되어 있어 Git에 커밋되지 않습니다
+- API 키와 같은 민감한 정보는 절대 Git에 커밋하지 마세요
 - 프로덕션 환경에서는 반드시 환경변수로 JWT_SECRET을 설정하세요
 - JWT_SECRET은 최소 512비트(64바이트) 이상이어야 HS512 알고리즘이 정상 작동합니다
+- OpenAI API 키는 반드시 환경변수로 설정하세요
 - 기본값은 개발용이므로 프로덕션에서는 사용하지 마세요
 - DB_PASSWORD는 반드시 강력한 비밀번호를 사용하세요
 
@@ -139,7 +156,7 @@ java -jar build/libs/lucky-b-key-0.0.1-SNAPSHOT.jar
 
 ### 🤖 AI 기능 API
 - `GET /api/v1/shelters/recommendations` - AI 쉼터 추천
-- `GET /api/v1/shelters/{id}/congestion` - 혼잡도 예측
+- `GET /api/v1/shelters/{id}/congestion` - AI 혼잡도 예측
 
 ## 📁 도메인별 상세 문서
 
@@ -166,7 +183,8 @@ src/main/java/com/luckyb/
     ├── common/               # 공통 응답 형식
     ├── config/               # 설정 클래스
     ├── exception/            # 예외 처리
-    └── jwt/                  # JWT 유틸리티
+    ├── jwt/                  # JWT 유틸리티
+    └── ai/                   # AI 서비스
 ```
 
 ## 🧪 테스트

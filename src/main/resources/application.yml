@@ -38,6 +38,12 @@ jwt:
   secret: ${JWT_SECRET:your-super-secret-jwt-key-here-change-this-in-production-this-must-be-at-least-512-bits-long-for-hs512-algorithm-to-work-properly-and-securely}
   expiration: 86400000 # 24시간 (밀리초)
 
+# OpenAI 설정
+openai:
+  api-key: ${OPENAI_API_KEY:your-openai-api-key-here}
+  model: gpt-3.5-turbo
+  max-tokens: 1000
+
 # 로깅 설정
 logging:
   level:

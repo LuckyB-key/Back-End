@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -161,8 +162,8 @@ public class ShelterService {
     public List<ShelterRecommendationResponse> getRecommendedShelters(ShelterRecommendationRequest request) {
         validateCoordinates(request.getLat(), request.getLng());
         
-        double searchRadius = request.getDistance() != null ? request.getDistance() : DEFAULT_SEARCH_RADIUS;
-        List<String> preferencesList = recommendationService.parseUserPreferences(request.getPreferences());
+        double searchRadius = DEFAULT_SEARCH_RADIUS;
+        List<String> preferencesList = request.getPreferences() != null ? request.getPreferences() : new ArrayList<>();
         
         // 반경 내 모든 쉼터 조회
         List<Shelter> allShelters = shelterRepository.findAllActiveShelters();
@@ -191,7 +192,14 @@ public class ShelterService {
                     );
                     
                     return new ShelterWithScore(
-                        ShelterRecommendationResponse.from(item.shelter, item.distance, predictedCongestion),
+                        ShelterRecommendationResponse.builder()
+                            .id(item.shelter.getShelterId())
+                            .name(item.shelter.getName())
+                            .distance(item.distance)
+                            .status(item.shelter.getStatus().getValue())
+                            .facilities(item.shelter.getFacilities())
+                            .predictedCongestion(predictedCongestion)
+                            .build(),
                         score
                     );
                 })
@@ -219,12 +227,13 @@ public class ShelterService {
         String congestionStatus = congestionPredictionService.calculateCongestionStatus(
             predictedOccupancy, shelter.getCapacity());
         
-        return CongestionResponse.of(
-            congestionStatus,
-            currentOccupancy,
-            predictedOccupancy,
-            shelter.getCapacity()
-        );
+        return CongestionResponse.builder()
+            .status(congestionStatus)
+            .currentOccupancy(currentOccupancy)
+            .predictedOccupancy(predictedOccupancy)
+            .capacity(shelter.getCapacity())
+            .message("혼잡도 예측이 완료되었습니다.")
+            .build();
     }
 
     // === Private Helper Methods ===
