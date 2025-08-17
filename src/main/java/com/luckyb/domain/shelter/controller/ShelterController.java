@@ -1,12 +1,14 @@
 package com.luckyb.domain.shelter.controller;
 
 import com.luckyb.domain.shelter.dto.*;
+import com.luckyb.domain.shelter.entity.Shelter;
+import com.luckyb.domain.shelter.repository.ShelterRepository;
 import com.luckyb.domain.shelter.service.ShelterService;
 import com.luckyb.domain.shelter.service.AiShelterService;
 import com.luckyb.global.common.ApiResponse;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +21,7 @@ public class ShelterController {
 
   private final ShelterService shelterService;
   private final AiShelterService aiShelterService;
+  private final ShelterRepository shelterRepository;
 
   /**
    * 쉼터 목록 조회 (위치 기반)
@@ -128,10 +131,31 @@ public class ShelterController {
     return ApiResponse.success(response);
   }
 
-  @PutMapping("/{shelterId}/like")
-  public ResponseEntity<String> toggleLike(@PathVariable String shelterId) {
-    shelterService.toggleLike(shelterId);
-    return ResponseEntity.ok("좋아요 토글 완료");
+  /*  @PutMapping("/{shelterId}/like")
+    public ResponseEntity<String> toggleLike(@PathVariable String shelterId) {
+      shelterService.toggleLike(shelterId);
+      return ResponseEntity.ok("좋아요 토글 완료");
+    }*/
+
+  @PostMapping("/{shelterId}/likes")
+  public ApiResponse<String> likeShelter(@PathVariable String shelterId) {
+    shelterService.addLike(shelterId);
+    return ApiResponse.success("좋아요 등록 완료");
   }
 
+  @DeleteMapping("/{shelterId}/likes")
+  public ApiResponse<String> unlikeShelter(@PathVariable String shelterId) {
+    shelterService.removeLike(shelterId);
+    return ApiResponse.success("좋아요 취소 완료");
+  }
+
+  @GetMapping("/likes")
+  public ApiResponse<List<ShelterLikeResponse>> getLikes() {
+    List<Shelter> shelters = shelterRepository.findAll();
+    List<ShelterLikeResponse> response = shelters.stream()
+        .map(s -> new ShelterLikeResponse(s.getShelterId(), s.getLikeCount()))
+        .collect(Collectors.toList());
+
+    return ApiResponse.success(response);
+  }
 }

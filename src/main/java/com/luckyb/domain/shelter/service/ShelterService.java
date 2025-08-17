@@ -1,7 +1,5 @@
 package com.luckyb.domain.shelter.service;
 
-import com.luckyb.domain.like.entity.Like;
-import com.luckyb.domain.like.repository.LikeRepository;
 import com.luckyb.domain.shelter.dto.*;
 import com.luckyb.domain.shelter.entity.Shelter;
 import com.luckyb.domain.shelter.repository.ShelterRepository;
@@ -29,7 +27,6 @@ public class ShelterService {
   private final LocationService locationService;
   private final RecommendationService recommendationService;
   private final CongestionPredictionService congestionPredictionService;
-  private final LikeRepository likeRepository;
 
   // 기본 검색 반경 (km)
   private static final double DEFAULT_SEARCH_RADIUS = 5.0;
@@ -243,27 +240,21 @@ public class ShelterService {
   }
 
   @Transactional
-  public void toggleLike(String shelterId) {
+  public void addLike(String shelterId) {
     Shelter shelter = shelterRepository.findById(shelterId)
         .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 쉼터 ID 입니다."));
 
-    // Shelter 기준으로 기존 좋아요 조회
-    List<Like> existingLikes = likeRepository.findAllByShelter(shelter);
-
-    if (!existingLikes.isEmpty()) {
-      // 좋아요가 있으면 삭제
-      likeRepository.deleteAll(existingLikes);
-      shelter.decreaseLikeCount();
-    } else {
-      // 좋아요 없으면 추가
-      Like like = new Like();
-      like.setShelter(shelter);
-      likeRepository.save(like);
-      shelter.increaseLikeCount();
-    }
-
+    shelter.increaseLikeCount();
     shelterRepository.save(shelter);
-    System.out.println("현재 좋아요 수: " + shelter.getLikeCount());
+  }
+
+  @Transactional
+  public void removeLike(String shelterId) {
+    Shelter shelter = shelterRepository.findById(shelterId)
+        .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 쉼터 ID 입니다."));
+
+    shelter.decreaseLikeCount();
+    shelterRepository.save(shelter);
   }
 
   // === Private Helper Methods ===
