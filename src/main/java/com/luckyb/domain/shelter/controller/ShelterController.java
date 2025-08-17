@@ -2,6 +2,7 @@ package com.luckyb.domain.shelter.controller;
 
 import com.luckyb.domain.shelter.dto.*;
 import com.luckyb.domain.shelter.service.ShelterService;
+import com.luckyb.domain.shelter.service.AiShelterService;
 import com.luckyb.global.common.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +17,7 @@ import java.util.List;
 public class ShelterController {
 
     private final ShelterService shelterService;
+    private final AiShelterService aiShelterService;
 
     /**
      * 쉼터 목록 조회 (위치 기반)
@@ -94,21 +96,21 @@ public class ShelterController {
     public ApiResponse<List<ShelterRecommendationResponse>> getRecommendedShelters(
             @RequestParam Double lat,
             @RequestParam Double lng,
-            @RequestParam(required = false) Double distance,
-            @RequestParam(required = false) String preferences
+            @RequestParam(required = false) List<String> preferences,
+            @RequestParam(required = false) String category
     ) {
         ShelterRecommendationRequest request = new ShelterRecommendationRequest();
         request.setLat(lat);
         request.setLng(lng);
-        request.setDistance(distance);
         request.setPreferences(preferences);
+        request.setCategory(category);
 
-        List<ShelterRecommendationResponse> recommendations = shelterService.getRecommendedShelters(request);
+        List<ShelterRecommendationResponse> recommendations = aiShelterService.getShelterRecommendations(request);
         return ApiResponse.success(recommendations);
     }
 
     /**
-     * 혼잡도 예측
+     * AI 혼잡도 예측
      */
     @GetMapping("/{shelterId}/congestion")
     public ApiResponse<CongestionResponse> getCongestionPrediction(
@@ -120,7 +122,7 @@ public class ShelterController {
         request.setDate(date);
         request.setTime(time);
 
-        CongestionResponse response = shelterService.getCongestionPrediction(shelterId, request);
+        CongestionResponse response = aiShelterService.predictCongestion(shelterId, request);
         return ApiResponse.success(response);
     }
 } 
