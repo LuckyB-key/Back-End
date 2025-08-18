@@ -157,6 +157,7 @@ java -jar build/libs/lucky-b-key-0.0.1-SNAPSHOT.jar
 ### 🤖 AI 기능 API
 - `GET /api/v1/shelters/recommendations` - AI 쉼터 추천
 - `GET /api/v1/shelters/{id}/congestion` - AI 혼잡도 예측
+- `GET /api/v1/advertisements/ai-recommendations` - AI 맞춤 광고 추천
 
 ## 📁 도메인별 상세 문서
 
@@ -167,6 +168,8 @@ java -jar build/libs/lucky-b-key-0.0.1-SNAPSHOT.jar
 - [쉼터 도메인](src/main/java/com/luckyb/domain/shelter/README.md) - 쉼터 관리 및 AI 기능 API
 - [공지사항 도메인](src/main/java/com/luckyb/domain/announcement/README.md) - 공지사항 관리 API
 - [쿠폰 도메인](src/main/java/com/luckyb/domain/coupon/README.md) - 쿠폰 관리 API
+- [광고 도메인](src/main/java/com/luckyb/domain/advertisement/README.md) - AI 맞춤 광고 API
+- [좋아요 도메인](src/main/java/com/luckyb/domain/like/README.md) - 쉼터 좋아요 기능
 
 ## 🗂️ 프로젝트 구조
 
@@ -178,7 +181,9 @@ src/main/java/com/luckyb/
 │   ├── user/                 # 사용자 도메인
 │   ├── shelter/              # 쉼터 도메인
 │   ├── announcement/         # 공지사항 도메인
-│   └── coupon/               # 쿠폰 도메인
+│   ├── coupon/               # 쿠폰 도메인
+│   ├── advertisement/        # 광고 도메인
+│   └── like/                 # 좋아요 도메인
 └── global/
     ├── common/               # 공통 응답 형식
     ├── config/               # 설정 클래스

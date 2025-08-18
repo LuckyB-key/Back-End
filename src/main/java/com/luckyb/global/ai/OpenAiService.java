@@ -114,5 +114,22 @@ public class OpenAiService implements AiService {
         }
     }
     
+    @Override
+    public List<Map<String, Object>> recommendAdvertisements(double lat, double lng, String userId) {
+        String prompt = String.format(
+            "위도 %.6f, 경도 %.6f 위치에서 사용자 ID %s를 위한 맞춤 광고를 추천해주세요. " +
+            "JSON 형태로 응답해주세요: [{\"id\": \"ad_001\", \"ad_type\": \"location_based\", \"content\": \"가까운 무더위 쉼터 안내\", \"businessName\": \"서울시청\", \"image\": \"https://example.com/image.jpg\"}]",
+            lat, lng, userId != null ? userId : "anonymous"
+        );
+        
+        String response = generateText(prompt);
+        try {
+            return objectMapper.readValue(response, List.class);
+        } catch (Exception e) {
+            log.error("광고 추천 응답 파싱 오류", e);
+            return new ArrayList<>();
+        }
+    }
+    
 
 } 

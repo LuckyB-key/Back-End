@@ -7,6 +7,7 @@ OpenAI API를 활용한 AI 기반 추천 및 예측 서비스를 제공하는 �
 - **OpenAI API 연동**: GPT 모델을 활용한 자연어 처리
 - **쉼터 추천**: 위치 기반 AI 쉼터 추천
 - **혼잡도 예측**: AI 기반 혼잡도 예측
+- **맞춤 광고**: 위치 기반 AI 맞춤 광고 추천
 
 ## 🏗️ 구조
 
@@ -38,6 +39,11 @@ public interface AiService {
      * 혼잡도 예측을 위한 AI 분석
      */
     Map<String, Object> predictCongestion(String shelterId, String date, String time);
+    
+    /**
+     * 맞춤 광고 추천을 위한 AI 분석
+     */
+    List<Map<String, Object>> recommendAdvertisements(double lat, double lng, String userId);
     
 
 }
@@ -77,6 +83,13 @@ JSON 형태로 응답해주세요: [{"id": "shelter_id", "name": "쉼터명", "d
 ```
 쉼터 ID shelter_001에서 2024-01-15 14:00의 혼잡도를 예측해주세요. 
 JSON 형태로 응답해주세요: {"status": "한산함", "currentOccupancy": 10, "predictedOccupancy": 15, "capacity": 50, "message": "예측 메시지"}
+```
+
+### 맞춤 광고 추천 프롬프트
+
+```
+위도 37.5665, 경도 126.9780 위치에서 사용자 ID user_123을 위한 맞춤 광고를 추천해주세요. 
+JSON 형태로 응답해주세요: [{"id": "ad_001", "ad_type": "location_based", "content": "가까운 무더위 쉼터 안내", "businessName": "서울시청", "image": "https://example.com/image.jpg"}]
 ```
 
 
@@ -130,6 +143,8 @@ curl -X GET "http://localhost:8080/api/v1/shelters/recommendations?lat=37.5665&l
 # 혼잡도 예측 테스트
 curl -X GET "http://localhost:8080/api/v1/shelters/shelter_001/congestion?date=2024-01-15&time=14:00"
 
+# AI 맞춤 광고 테스트
+curl -X GET "http://localhost:8080/api/v1/advertisements/ai-recommendations?lat=37.5665&lng=126.9780&userId=test-user"
 
 ```
 
