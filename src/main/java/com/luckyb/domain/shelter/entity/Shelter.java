@@ -3,10 +3,7 @@ package com.luckyb.domain.shelter.entity;
 import com.luckyb.domain.shelter.enums.ShelterStatus;
 import com.luckyb.domain.shelter.enums.ShelterType;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -56,6 +53,7 @@ public class Shelter {
     @Column(name = "status", nullable = false)
     private ShelterStatus status;
 
+    @Setter
     @Column(name = "like_count")
     private Integer likeCount = 0;
 
