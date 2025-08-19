@@ -2,6 +2,7 @@ package com.luckyb.domain.shelter.service;
 
 import com.luckyb.domain.like.entity.Like;
 import com.luckyb.domain.like.repository.LikeRepository;
+import com.luckyb.domain.search.SearchService;
 import com.luckyb.domain.shelter.dto.*;
 import com.luckyb.domain.shelter.entity.Shelter;
 import com.luckyb.domain.shelter.enums.ShelterStatus;
@@ -30,6 +31,7 @@ public class ShelterService {
 
   private final ShelterRepository shelterRepository;
   private final LocationService locationService;
+  private final SearchService searchService;
   private final RecommendationService recommendationService;
   private final CongestionPredictionService congestionPredictionService;
   private final LikeRepository likeRepository;
@@ -93,6 +95,8 @@ public class ShelterService {
       Shelter shelter = request.toEntity();
       Shelter savedShelter = shelterRepository.save(shelter);
 
+      searchService.save(savedShelter);
+
       log.info("새 쉼터가 등록되었습니다. shelterId: {}, name: {}",
           savedShelter.getShelterId(), savedShelter.getName());
 
@@ -149,6 +153,7 @@ public class ShelterService {
       // 소프트 삭제: 상태를 INACTIVE로 변경
       shelter.updateStatus(ShelterStatus.INACTIVE);
       shelterRepository.save(shelter);
+      searchService.delete(shelterId);
 
       log.info("쉼터가 삭제되었습니다. shelterId: {}", shelterId);
 
