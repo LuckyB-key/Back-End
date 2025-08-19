@@ -22,7 +22,7 @@ public class ShelterListResponse {
             shelter.getName(),
             buildAddressString(shelter),
             distance,
-            shelter.getStatus().getValue(),
+            shelter.getStatus().name(),
             predictedCongestion,
             CoordinatesDto.from(shelter.getCoordinates())
         );

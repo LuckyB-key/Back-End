@@ -24,7 +24,7 @@ public class CouponIssueResponse {
             userCoupon.getCoupon().getCouponId(),
             userCoupon.getCoupon().getTitle(),
             userCoupon.getCoupon().getDescription(),
-            userCoupon.getStatus().getValue(),
+            userCoupon.getStatus().name(),
             userCoupon.getIssuedAt().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
             userCoupon.getCoupon().getExpiryDate().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
         );

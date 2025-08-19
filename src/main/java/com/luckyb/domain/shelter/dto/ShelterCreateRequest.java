@@ -1,6 +1,7 @@
 package com.luckyb.domain.shelter.dto;
 
 import com.luckyb.domain.shelter.entity.Shelter;
+import com.luckyb.domain.shelter.enums.ShelterType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -23,7 +24,7 @@ public class ShelterCreateRequest {
                 .name(name)
                 .address(address != null ? address.toEntity() : null)
                 .coordinates(coordinates != null ? coordinates.toEntity() : null)
-                .type(Shelter.ShelterType.fromValue(type))
+                .type(ShelterType.fromValue(type))
                 .capacity(capacity)
                 .facilities(facilities)
                 .operatingHours(operatingHours)

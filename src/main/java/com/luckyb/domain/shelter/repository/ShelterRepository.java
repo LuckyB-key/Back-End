@@ -1,6 +1,8 @@
 package com.luckyb.domain.shelter.repository;
 
 import com.luckyb.domain.shelter.entity.Shelter;
+import com.luckyb.domain.shelter.enums.ShelterStatus;
+import com.luckyb.domain.shelter.enums.ShelterType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -21,7 +23,7 @@ public interface ShelterRepository extends JpaRepository<Shelter, String> {
   /**
    * 쉼터 타입으로 조회
    */
-  List<Shelter> findByTypeAndStatus(Shelter.ShelterType type, Shelter.ShelterStatus status);
+  List<Shelter> findByTypeAndStatus(ShelterType type, ShelterStatus status);
 
   /**
    * 특정 편의시설을 가진 쉼터 조회
@@ -60,12 +62,12 @@ public interface ShelterRepository extends JpaRepository<Shelter, String> {
   /**
    * 활성 상태인 모든 쉼터 조회
    */
-  List<Shelter> findByStatus(Shelter.ShelterStatus status);
+  List<Shelter> findByStatus(ShelterStatus status);
 
   /**
    * 쉼터 이름으로 검색 (부분 일치)
    */
-  List<Shelter> findByNameContainingIgnoreCaseAndStatus(String name, Shelter.ShelterStatus status);
+  List<Shelter> findByNameContainingIgnoreCaseAndStatus(String name, ShelterStatus status);
 
   /**
    * 특정 위치에서 가장 가까운 쉼터들 조회 (제한된 개수)

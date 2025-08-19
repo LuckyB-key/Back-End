@@ -1,6 +1,7 @@
 package com.luckyb.domain.shelter.service;
 
 import com.luckyb.domain.shelter.entity.Shelter;
+import com.luckyb.domain.shelter.enums.ShelterType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -111,7 +112,7 @@ public class CongestionPredictionService {
     /**
      * 쉼터 타입별 가중치
      */
-    private double getShelterTypeMultiplier(Shelter.ShelterType type) {
+    private double getShelterTypeMultiplier(ShelterType type) {
         return switch (type) {
             case PUBLIC -> 1.2;        // 공공시설 - 이용률 높음
             case COMMUNITY -> 1.0;     // 커뮤니티 시설 - 기본

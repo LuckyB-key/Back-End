@@ -70,77 +70,63 @@ public enum UserRole {
     public String getDescription() {
         return description;
     }
+
+    public static UserRole fromValue(String value) {
+        for (UserRole role : UserRole.values()) {
+            if (role.name().equals(value)) {
+                return role;
+            }
+        }
+        throw new IllegalArgumentException("Unknown role: " + value);
+    }
 }
 ```
 
-### JPA에서 사용
+### 엔티티에서 사용
 ```java
 @Entity
 public class User {
     @Enumerated(EnumType.STRING)
+    @Column(name = "role", nullable = false)
     private UserRole role;
+    
+    // import com.luckyb.global.enums.UserRole; 추가 필요
 }
 ```
 
-### Controller에서 사용
-```java
-@GetMapping("/users")
-public List<User> getUsersByRole(@RequestParam UserRole role) {
-    return userService.findByRole(role);
-}
+## 📝 정리 완료 사항
+
+### ✅ 완료된 작업
+1. **중복 enum 제거**: 엔티티 내부의 중복된 enum 정의들을 모두 제거
+2. **별도 파일 통일**: 모든 enum을 별도 파일로 관리하도록 통일
+3. **일관된 구조**: 모든 enum에 동일한 구조 적용 (description + fromValue 메서드)
+4. **Import 정리**: 엔티티에서 별도 enum 파일을 import하도록 수정
+
+### 🗂️ 정리된 파일들
+- `User.java`: 중복 UserRole enum 제거 → `global.enums.UserRole` 사용
+- `Shelter.java`: 중복 ShelterType, ShelterStatus enum 제거 → `shelter.enums.*` 사용
+- `Coupon.java`: 중복 CouponStatus enum 제거 → `coupon.enums.CouponStatus` 사용
+- `UserCoupon.java`: 중복 UserCouponStatus enum 제거 → `coupon.enums.UserCouponStatus` 사용
+
+### 🔄 변경된 구조
+```
+이전: 엔티티 내부에 enum 정의
+├── User.java
+│   └── enum UserRole { ... }
+└── Shelter.java
+    ├── enum ShelterType { ... }
+    └── enum ShelterStatus { ... }
+
+현재: 별도 파일로 enum 관리
+├── global/enums/UserRole.java
+├── shelter/enums/ShelterType.java
+└── shelter/enums/ShelterStatus.java
 ```
 
-## 📝 네이밍 컨벤션
+## 🎯 장점
 
-### Enum 클래스명
-- **PascalCase** 사용
-- **명사 + Type/Status/Role** 형태
-- 예: `UserRole`, `ShelterType`, `CouponStatus`
-
-### Enum 상수명
-- **UPPER_SNAKE_CASE** 사용
-- **명확하고 구체적인 이름** 사용
-- 예: `USER`, `BUSINESS_USER`, `ACTIVE`, `INACTIVE`
-
-### 패키지 구조
-- **공통 enum**: `global.enums`
-- **도메인별 enum**: `domain.{도메인명}.enums`
-- **AI 관련 enum**: `global.ai.enums`
-
-## 🔄 마이그레이션 가이드
-
-### 기존 코드에서 새로운 enum 사용하기
-
-1. **Import 추가**
-```java
-import com.luckyb.global.enums.UserRole;
-import com.luckyb.domain.shelter.enums.ShelterType;
-```
-
-2. **기존 enum 참조 변경**
-```java
-// 기존
-private User.UserRole role;
-
-// 변경 후
-private UserRole role;
-```
-
-3. **JPA 엔티티 업데이트**
-```java
-@Enumerated(EnumType.STRING)
-private UserRole role;
-```
-
-## 🚀 확장 계획
-
-### 새로운 Enum 추가 시
-1. 적절한 패키지 선택 (global vs domain)
-2. 명확한 네이밍 적용
-3. description 필드 추가
-4. 문서화 업데이트
-
-### Enum 유틸리티 메서드
-- `fromString()`: 문자열로부터 enum 변환
-- `getAllValues()`: 모든 enum 값 반환
-- `isValid()`: 유효성 검증 
+1. **재사용성**: 여러 곳에서 동일한 enum 사용 가능
+2. **유지보수성**: enum 수정 시 한 곳에서만 변경
+3. **일관성**: 모든 enum이 동일한 구조를 가짐
+4. **가독성**: 코드 구조가 더 명확해짐
+5. **테스트 용이성**: enum별로 독립적인 테스트 가능 

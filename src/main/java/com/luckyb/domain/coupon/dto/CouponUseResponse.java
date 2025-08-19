@@ -22,7 +22,7 @@ public class CouponUseResponse {
             coupon.getCouponId(),
             coupon.getTitle(),
             coupon.getDescription(),
-            coupon.getStatus().getValue(),
+            coupon.getStatus().name(),
             coupon.getUsedAt() != null ? coupon.getUsedAt().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME) : null,
             coupon.getUsedByUser() != null ? coupon.getUsedByUser().getUserId() : null
         );

@@ -1,5 +1,7 @@
 package com.luckyb.domain.shelter.entity;
 
+import com.luckyb.domain.shelter.enums.ShelterStatus;
+import com.luckyb.domain.shelter.enums.ShelterType;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -140,57 +142,5 @@ public class Shelter {
         this.status = status;
     }
 
-    // 쉼터 타입 열거형
-    public enum ShelterType {
-        PUBLIC("public"),           // 공공시설
-        PRIVATE("private"),         // 민간시설
-        COMMERCIAL("commercial"),   // 상업시설
-        COMMUNITY("community");     // 커뮤니티 시설
 
-        private final String value;
-
-        ShelterType(String value) {
-            this.value = value;
-        }
-
-        public String getValue() {
-            return value;
-        }
-
-        public static ShelterType fromValue(String value) {
-            for (ShelterType type : ShelterType.values()) {
-                if (type.getValue().equals(value)) {
-                    return type;
-                }
-            }
-            throw new IllegalArgumentException("Unknown shelter type: " + value);
-        }
-    }
-
-    // 쉼터 상태 열거형
-    public enum ShelterStatus {
-        ACTIVE("active"),           // 운영 중
-        INACTIVE("inactive"),       // 운영 중지
-        MAINTENANCE("maintenance"), // 점검 중
-        FULL("full");              // 만석
-
-        private final String value;
-
-        ShelterStatus(String value) {
-            this.value = value;
-        }
-
-        public String getValue() {
-            return value;
-        }
-
-        public static ShelterStatus fromValue(String value) {
-            for (ShelterStatus status : ShelterStatus.values()) {
-                if (status.getValue().equals(value)) {
-                    return status;
-                }
-            }
-            throw new IllegalArgumentException("Unknown shelter status: " + value);
-        }
-    }
 } 

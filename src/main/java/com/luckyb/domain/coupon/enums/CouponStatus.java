@@ -5,9 +5,9 @@ package com.luckyb.domain.coupon.enums;
  */
 public enum CouponStatus {
     ACTIVE("활성"),
-    INACTIVE("비활성"),
+    USED("사용됨"),
     EXPIRED("만료"),
-    DEPLETED("소진");
+    CANCELLED("취소됨");
 
     private final String description;
 
@@ -17,5 +17,14 @@ public enum CouponStatus {
 
     public String getDescription() {
         return description;
+    }
+
+    public static CouponStatus fromValue(String value) {
+        for (CouponStatus status : CouponStatus.values()) {
+            if (status.name().equals(value)) {
+                return status;
+            }
+        }
+        throw new IllegalArgumentException("Unknown coupon status: " + value);
     }
 } 

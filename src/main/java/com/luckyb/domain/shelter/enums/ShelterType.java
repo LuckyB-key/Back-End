@@ -18,4 +18,13 @@ public enum ShelterType {
     public String getDescription() {
         return description;
     }
+
+    public static ShelterType fromValue(String value) {
+        for (ShelterType type : ShelterType.values()) {
+            if (type.name().equals(value)) {
+                return type;
+            }
+        }
+        throw new IllegalArgumentException("Unknown shelter type: " + value);
+    }
 } 

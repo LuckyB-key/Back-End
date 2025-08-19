@@ -1,6 +1,7 @@
 package com.luckyb.domain.shelter.service;
 
 import com.luckyb.domain.shelter.entity.Shelter;
+import com.luckyb.domain.shelter.enums.ShelterType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -118,7 +119,7 @@ public class RecommendationService {
     /**
      * 시설 타입별 우선순위 점수
      */
-    public double getTypePreferenceScore(Shelter.ShelterType type) {
+    public double getTypePreferenceScore(ShelterType type) {
         return switch (type) {
             case PUBLIC -> 90.0;        // 공공시설 우선
             case COMMUNITY -> 80.0;     // 커뮤니티 시설

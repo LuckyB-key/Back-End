@@ -17,4 +17,13 @@ public enum UserRole {
     public String getDescription() {
         return description;
     }
+
+    public static UserRole fromValue(String value) {
+        for (UserRole role : UserRole.values()) {
+            if (role.name().equals(value)) {
+                return role;
+            }
+        }
+        throw new IllegalArgumentException("Unknown role: " + value);
+    }
 } 

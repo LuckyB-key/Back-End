@@ -26,7 +26,7 @@ public class MyCouponResponse {
             userCoupon.getCoupon().getCouponId(),
             userCoupon.getCoupon().getTitle(),
             userCoupon.getCoupon().getDescription(),
-            userCoupon.getStatus().getValue(),
+            userCoupon.getStatus().name(),
             userCoupon.getIssuedAt().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
             userCoupon.getUsedAt() != null ? userCoupon.getUsedAt().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME) : null,
             userCoupon.getCoupon().getExpiryDate().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
