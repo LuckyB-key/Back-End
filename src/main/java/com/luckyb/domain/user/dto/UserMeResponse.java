@@ -20,7 +20,7 @@ public class UserMeResponse {
             user.getUserId(),
             user.getNickname(),
             user.getEmail(),
-            user.getRole().getValue(),
+            user.getRole().name(),
             user.getPreferences()
         );
     }

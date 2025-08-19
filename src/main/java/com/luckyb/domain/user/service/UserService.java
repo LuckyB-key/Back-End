@@ -4,6 +4,7 @@ import com.luckyb.domain.user.dto.UserMeResponse;
 import com.luckyb.domain.user.dto.UserMeUpdateRequest;
 import com.luckyb.domain.user.entity.User;
 import com.luckyb.domain.user.repository.UserRepository;
+import com.luckyb.global.enums.UserRole;
 import com.luckyb.global.exception.ErrorCode;
 import com.luckyb.global.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -64,7 +65,7 @@ public class UserService {
     @Transactional
     public User createUser() {
         try {
-            User user = new User(User.UserRole.USER);
+            User user = new User(UserRole.USER);
             
             User savedUser = userRepository.save(user);
             log.info("새 사용자가 생성되었습니다. userId: {}", savedUser.getUserId());

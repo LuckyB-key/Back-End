@@ -7,6 +7,7 @@ import com.luckyb.domain.coupon.repository.CouponRepository;
 import com.luckyb.domain.coupon.repository.UserCouponRepository;
 import com.luckyb.domain.user.entity.User;
 import com.luckyb.domain.user.repository.UserRepository;
+import com.luckyb.global.enums.UserRole;
 import com.luckyb.global.exception.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,7 +40,7 @@ public class CouponService {
         User businessUser = userRepository.findById(businessUserId)
                 .orElseThrow(() -> new UserNotFoundException(ErrorCode.USER_NOT_FOUND, businessUserId));
         
-        if (businessUser.getRole() != User.UserRole.BUSINESS) {
+        if (businessUser.getRole() != UserRole.BUSINESS) {
             throw new RuntimeException("비즈니스 사용자만 쿠폰을 등록할 수 있습니다");
         }
 

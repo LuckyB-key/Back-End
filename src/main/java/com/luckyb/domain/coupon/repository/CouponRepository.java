@@ -1,6 +1,7 @@
 package com.luckyb.domain.coupon.repository;
 
 import com.luckyb.domain.coupon.entity.Coupon;
+import com.luckyb.domain.coupon.enums.CouponStatus;
 import com.luckyb.domain.user.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -41,7 +42,7 @@ public interface CouponRepository extends JpaRepository<Coupon, String> {
     /**
      * 상태별 쿠폰 조회
      */
-    List<Coupon> findByStatusOrderByCreatedAtDesc(Coupon.CouponStatus status);
+    List<Coupon> findByStatusOrderByCreatedAtDesc(CouponStatus status);
     
     /**
      * 만료 예정 쿠폰 조회

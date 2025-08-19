@@ -16,7 +16,7 @@ public class ShelterCreateResponse {
         return new ShelterCreateResponse(
             shelter.getShelterId(),
             shelter.getName(),
-            shelter.getStatus().getValue()
+            shelter.getStatus().name()
         );
     }
 } 

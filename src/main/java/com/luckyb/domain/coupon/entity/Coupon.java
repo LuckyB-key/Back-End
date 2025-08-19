@@ -1,5 +1,6 @@
 package com.luckyb.domain.coupon.entity;
 
+import com.luckyb.domain.coupon.enums.CouponStatus;
 import com.luckyb.domain.user.entity.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -90,30 +91,5 @@ public class Coupon {
         return this.status == CouponStatus.ACTIVE && !isExpired();
     }
 
-    // 쿠폰 상태 열거형
-    public enum CouponStatus {
-        ACTIVE("active"),     // 사용 가능
-        USED("used"),         // 사용됨
-        EXPIRED("expired"),   // 만료됨
-        CANCELLED("cancelled"); // 취소됨
 
-        private final String value;
-
-        CouponStatus(String value) {
-            this.value = value;
-        }
-
-        public String getValue() {
-            return value;
-        }
-
-        public static CouponStatus fromValue(String value) {
-            for (CouponStatus status : CouponStatus.values()) {
-                if (status.getValue().equals(value)) {
-                    return status;
-                }
-            }
-            throw new IllegalArgumentException("Unknown coupon status: " + value);
-        }
-    }
 } 

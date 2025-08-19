@@ -28,11 +28,11 @@ public class ShelterDetailResponse {
             shelter.getName(),
             AddressDto.from(shelter.getAddress()),
             CoordinatesDto.from(shelter.getCoordinates()),
-            shelter.getType().getValue(),
+            shelter.getType().name(),
             shelter.getCapacity(),
             shelter.getFacilities(),
             shelter.getOperatingHours(),
-            shelter.getStatus().getValue(),
+            shelter.getStatus().name(),
             shelter.getLikeCount(),
             shelter.getReviewCount()
         );

@@ -4,6 +4,7 @@ import com.luckyb.domain.like.entity.Like;
 import com.luckyb.domain.like.repository.LikeRepository;
 import com.luckyb.domain.shelter.dto.*;
 import com.luckyb.domain.shelter.entity.Shelter;
+import com.luckyb.domain.shelter.enums.ShelterStatus;
 import com.luckyb.domain.shelter.repository.ShelterRepository;
 import com.luckyb.domain.user.entity.User;
 import com.luckyb.domain.user.repository.UserRepository;
@@ -61,7 +62,7 @@ public class ShelterService {
         })
         .filter(item -> item.distance <= searchRadius)
         .filter(item -> request.getType() == null ||
-            item.shelter.getType().getValue().equals(request.getType()))
+            item.shelter.getType().name().equals(request.getType()))
         .filter(item -> facilitiesList == null ||
             facilitiesList.stream().anyMatch(facility ->
                 item.shelter.getFacilities().contains(facility)))
@@ -146,7 +147,7 @@ public class ShelterService {
       Shelter shelter = findActiveShelterById(shelterId);
 
       // 소프트 삭제: 상태를 INACTIVE로 변경
-      shelter.updateStatus(Shelter.ShelterStatus.INACTIVE);
+      shelter.updateStatus(ShelterStatus.INACTIVE);
       shelterRepository.save(shelter);
 
       log.info("쉼터가 삭제되었습니다. shelterId: {}", shelterId);
@@ -203,7 +204,7 @@ public class ShelterService {
                   .id(item.shelter.getShelterId())
                   .name(item.shelter.getName())
                   .distance(item.distance)
-                  .status(item.shelter.getStatus().getValue())
+                  .status(item.shelter.getStatus().name())
                   .facilities(item.shelter.getFacilities())
                   .predictedCongestion(predictedCongestion)
                   .build(),

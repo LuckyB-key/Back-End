@@ -1,6 +1,7 @@
 package com.luckyb.domain.shelter.dto;
 
 import com.luckyb.domain.shelter.entity.Shelter;
+import com.luckyb.domain.shelter.enums.ShelterType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -20,7 +21,7 @@ public class ShelterUpdateRequest {
     private String operatingHours;
     private String description;
     
-    public Shelter.ShelterType getShelterType() {
-        return type != null ? Shelter.ShelterType.fromValue(type) : null;
+    public ShelterType getShelterType() {
+        return type != null ? ShelterType.fromValue(type) : null;
     }
 } 
