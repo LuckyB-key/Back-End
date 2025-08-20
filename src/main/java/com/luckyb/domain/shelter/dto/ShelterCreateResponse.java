@@ -7,16 +7,18 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class ShelterCreateResponse {
-    
-    private String id;
-    private String name;
-    private String status;
-    
-    public static ShelterCreateResponse from(Shelter shelter) {
-        return new ShelterCreateResponse(
-            shelter.getShelterId(),
-            shelter.getName(),
-            shelter.getStatus().name()
-        );
-    }
+
+  private String id;
+  private String name;
+  private String imageUrl;
+  private String status;
+
+  public static ShelterCreateResponse from(Shelter shelter) {
+    return new ShelterCreateResponse(
+        shelter.getShelterId(),
+        shelter.getName(),
+        shelter.getImageUrl(),
+        shelter.getStatus().name()
+    );
+  }
 } 

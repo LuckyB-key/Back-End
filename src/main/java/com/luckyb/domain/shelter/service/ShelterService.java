@@ -130,6 +130,7 @@ public class ShelterService {
           request.getAddress() != null ? request.getAddress().toEntity() : null,
           request.getCoordinates() != null ? request.getCoordinates().toEntity() : null,
           request.getShelterType(),
+          request.getImageUrl(),
           request.getCapacity(),
           request.getFacilities(),
           request.getOperatingHours(),

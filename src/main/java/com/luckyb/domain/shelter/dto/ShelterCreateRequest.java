@@ -10,24 +10,26 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 public class ShelterCreateRequest {
-    
-    private String name;
-    private AddressDto address;
-    private CoordinatesDto coordinates;
-    private String type;
-    private Integer capacity;
-    private List<String> facilities;
-    private String operatingHours;
-    
-    public Shelter toEntity() {
-        return Shelter.builder()
-                .name(name)
-                .address(address != null ? address.toEntity() : null)
-                .coordinates(coordinates != null ? coordinates.toEntity() : null)
-                .type(ShelterType.fromValue(type))
-                .capacity(capacity)
-                .facilities(facilities)
-                .operatingHours(operatingHours)
-                .build();
-    }
+
+  private String name;
+  private AddressDto address;
+  private CoordinatesDto coordinates;
+  private String type;
+  private String imageUrl;
+  private Integer capacity;
+  private List<String> facilities;
+  private String operatingHours;
+
+  public Shelter toEntity() {
+    return Shelter.builder()
+        .name(name)
+        .address(address != null ? address.toEntity() : null)
+        .coordinates(coordinates != null ? coordinates.toEntity() : null)
+        .type(ShelterType.fromValue(type))
+        .imageUrl(imageUrl)
+        .capacity(capacity)
+        .facilities(facilities)
+        .operatingHours(operatingHours)
+        .build();
+  }
 } 
