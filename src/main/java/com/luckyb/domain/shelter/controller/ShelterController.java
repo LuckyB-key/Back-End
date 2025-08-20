@@ -61,9 +61,16 @@ public class ShelterController {
    */
   @PostMapping
   public ApiResponse<ShelterCreateResponse> createShelter(
-      @RequestBody ShelterCreateRequest request
+      @RequestBody ShelterCreateRequest request,
+      @RequestHeader("Authorization") String authorization
   ) {
-    ShelterCreateResponse response = shelterService.createShelter(request);
+    String token = jwtTokenProvider.resolveToken(authorization);
+    if (token == null || !jwtTokenProvider.validateToken(token)) {
+      throw new InvalidTokenException(ErrorCode.INVALID_TOKEN);
+    }
+
+    String userId = jwtTokenProvider.getUserIdFromToken(token);
+    ShelterCreateResponse response = shelterService.createShelter(request, userId);
     log.info("새 쉼터가 등록되었습니다. shelterId: {}", response.getId());
     return ApiResponse.success(response);
   }

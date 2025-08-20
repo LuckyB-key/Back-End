@@ -2,6 +2,7 @@ package com.luckyb.domain.shelter.service;
 
 import com.luckyb.domain.like.entity.Like;
 import com.luckyb.domain.like.repository.LikeRepository;
+import com.luckyb.domain.notification.service.NotificationService;
 import com.luckyb.domain.search.SearchService;
 import com.luckyb.domain.shelter.dto.*;
 import com.luckyb.domain.shelter.entity.Shelter;
@@ -11,6 +12,7 @@ import com.luckyb.domain.user.entity.User;
 import com.luckyb.domain.user.repository.UserRepository;
 import com.luckyb.global.exception.ErrorCode;
 import com.luckyb.global.exception.ShelterNotFoundException;
+import com.luckyb.global.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -34,6 +36,7 @@ public class ShelterService {
   private final SearchService searchService;
   private final RecommendationService recommendationService;
   private final CongestionPredictionService congestionPredictionService;
+  private final NotificationService notificationService;
   private final LikeRepository likeRepository;
   private final UserRepository userRepository;
 
@@ -88,17 +91,22 @@ public class ShelterService {
    * 쉼터 등록
    */
   @Transactional
-  public ShelterCreateResponse createShelter(ShelterCreateRequest request) {
+  public ShelterCreateResponse createShelter(ShelterCreateRequest request, String userId) {
     try {
       validateShelterCreateRequest(request);
 
+      User user = userRepository.findById(userId)
+          .orElseThrow(() -> new UserNotFoundException(ErrorCode.USER_NOT_FOUND, userId));
+
       Shelter shelter = request.toEntity();
+      shelter.setUser(user);
+
       Shelter savedShelter = shelterRepository.save(shelter);
 
       searchService.save(savedShelter);
 
-      log.info("새 쉼터가 등록되었습니다. shelterId: {}, name: {}",
-          savedShelter.getShelterId(), savedShelter.getName());
+      log.info("새 쉼터가 등록되었습니다. shelterId: {}, name: {}, owner: {}",
+          savedShelter.getShelterId(), savedShelter.getName(), userId);
 
       return ShelterCreateResponse.from(savedShelter);
 
@@ -275,10 +283,13 @@ public class ShelterService {
       like.setShelter(shelter);
       like.setUser(user);
       likeRepository.save(like);
+
+      notificationService.shelterLikeNotification(shelterId, user.getNickname());
     }
 
     shelterRepository.save(shelter);
   }
+
   // === Private Helper Methods ===
 
   private Shelter findActiveShelterById(String shelterId) {
