@@ -2,6 +2,7 @@ package com.luckyb.domain.shelter.entity;
 
 import com.luckyb.domain.shelter.enums.ShelterStatus;
 import com.luckyb.domain.shelter.enums.ShelterType;
+import com.luckyb.domain.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -21,6 +22,11 @@ public class Shelter {
     @Id
     @Column(name = "shelter_id", updatable = false, nullable = false)
     private String shelterId;
+
+    @Setter
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column(name = "name", nullable = false, length = 100)
     private String name;
@@ -72,9 +78,10 @@ public class Shelter {
     private LocalDateTime updatedAt;
 
     @Builder
-    public Shelter(String name, Address address, Coordinates coordinates, ShelterType type,
-                   Integer capacity, List<String> facilities, String operatingHours, String description) {
+    public Shelter(User user, String name, Address address, Coordinates coordinates, ShelterType type,
+        Integer capacity, List<String> facilities, String operatingHours, String description) {
         this.shelterId = UUID.randomUUID().toString();
+        this.user = user;
         this.name = name;
         this.address = address;
         this.coordinates = coordinates;
@@ -87,7 +94,6 @@ public class Shelter {
         this.likeCount = 0;
         this.reviewCount = 0;
     }
-
     // 쉼터 정보 수정 메서드
     public void updateShelterInfo(String name, Address address, Coordinates coordinates, 
                                  ShelterType type, Integer capacity, List<String> facilities,
