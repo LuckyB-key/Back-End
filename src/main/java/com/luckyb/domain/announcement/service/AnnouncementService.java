@@ -36,6 +36,7 @@ public class AnnouncementService {
     Announcement announcement = Announcement.builder()
         .title(request.getTitle())
         .content(request.getContent())
+        .imageUrl(request.getImageUrl())
         .author(request.getAuthor())
         .build();
 
@@ -48,6 +49,7 @@ public class AnnouncementService {
         .announcementId(savedAnnouncement.getAnnouncementId())
         .title(savedAnnouncement.getTitle())
         .content(savedAnnouncement.getContent())
+        .imageUrl(savedAnnouncement.getImageUrl())
         .author(savedAnnouncement.getAuthor())
         .createdAt(savedAnnouncement.getCreatedAt())
         .updatedAt(savedAnnouncement.getUpdatedAt())
@@ -64,12 +66,14 @@ public class AnnouncementService {
         .orElseThrow(
             () -> new AnnouncementNotFoundException("공지사항을 찾을 수 없습니다. ID: " + announcementId));
 
-    announcement.updateAnnouncement(request.getTitle(), request.getContent());
+    announcement.updateAnnouncement(request.getTitle(), request.getContent(),
+        request.getImageUrl());
 
     return AnnouncementUpdateResponse.builder()
         .announcementId(announcement.getAnnouncementId())
         .title(announcement.getTitle())
         .content(announcement.getContent())
+        .imageUrl(announcement.getImageUrl())
         .author(announcement.getAuthor())
         .createdAt(announcement.getCreatedAt())
         .updatedAt(announcement.getUpdatedAt())
@@ -88,7 +92,9 @@ public class AnnouncementService {
             .announcementId(announcement.getAnnouncementId())
             .title(announcement.getTitle())
             .content(announcement.getContent())
+            .imageUrl(announcement.getImageUrl())
             .createdAt(announcement.getCreatedAt())
+            .updatedAt(announcement.getUpdatedAt())
             .build())
         .collect(Collectors.toList());
 
@@ -109,7 +115,9 @@ public class AnnouncementService {
         .announcementId(announcement.getAnnouncementId())
         .title(announcement.getTitle())
         .content(announcement.getContent())
+        .imageUrl(announcement.getImageUrl())
         .createdAt(announcement.getCreatedAt())
+        .updatedAt(announcement.getUpdatedAt())
         .build();
   }
 

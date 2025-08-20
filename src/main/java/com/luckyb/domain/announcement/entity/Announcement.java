@@ -17,42 +17,53 @@ import java.util.UUID;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Announcement {
 
-    @Id
-    @Column(name = "announcement_id", updatable = false, nullable = false)
-    private String announcementId;
+  @Id
+  @Column(name = "announcement_id", updatable = false, nullable = false)
+  private String announcementId;
 
-    @Column(name = "title", nullable = false, length = 200)
-    private String title;
+  @Column(name = "title", nullable = false, length = 200)
+  private String title;
 
-    @Column(name = "content", nullable = false, columnDefinition = "TEXT")
-    private String content;
+  @Column(name = "content", nullable = false, columnDefinition = "TEXT")
+  private String content;
 
-    @Column(name = "author", nullable = false, length = 100)
-    private String author;
+  @Column(name = "author", nullable = false, length = 100)
+  private String author;
 
-    @CreationTimestamp
-    @Column(name = "created_at", updatable = false)
-    private LocalDateTime createdAt;
+  private String imageUrl;
 
-    @UpdateTimestamp
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+  @CreationTimestamp
+  @Column(name = "created_at", updatable = false)
+  private LocalDateTime createdAt;
 
-    @Builder
-    public Announcement(String title, String content, String author) {
-        this.announcementId = UUID.randomUUID().toString();
-        this.title = title;
-        this.content = content;
-        this.author = author;
+  @UpdateTimestamp
+  @Column(name = "updated_at")
+  private LocalDateTime updatedAt;
+
+  @Builder
+  public Announcement(String title, String content, String imageUrl, String author) {
+    this.announcementId = UUID.randomUUID().toString();
+    this.title = title;
+    this.content = content;
+    this.imageUrl = imageUrl;
+    this.author = author;
+    this.createdAt = LocalDateTime.now();
+    this.updatedAt = LocalDateTime.now();
+  }
+
+  // 공지사항 정보 수정 메서드
+  public void updateAnnouncement(String title, String content, String imageUrl) {
+    if (title != null) {
+      this.title = title;
     }
-
-    // 공지사항 정보 수정 메서드
-    public void updateAnnouncement(String title, String content) {
-        if (title != null) {
-            this.title = title;
-        }
-        if (content != null) {
-            this.content = content;
-        }
+    if (content != null) {
+      this.content = content;
     }
+    if (imageUrl != null) {
+      this.imageUrl = imageUrl;
+    }
+    if (updatedAt != null) {
+        this.updatedAt = LocalDateTime.now();
+    }
+  }
 } 
