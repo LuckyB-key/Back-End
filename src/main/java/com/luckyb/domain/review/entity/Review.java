@@ -15,27 +15,27 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class Review {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
 
-    private String shelterId;
-    private String userId;
-    private String userNickname;
+  @Id
+  @GeneratedValue(strategy = GenerationType.UUID)
+  private String id;
 
-    @Column(columnDefinition = "TEXT")
-    private String text;
+  private String shelterId;
+  private String userId;
+  private String userNickname;
 
-    private int rating;
+  @Column(columnDefinition = "TEXT")
+  private String text;
 
-    @ElementCollection
-    private List<String> photoUrls;
+  private int rating;
 
-    @CreationTimestamp
-    private LocalDateTime createdAt;
+  @ElementCollection
+  private List<String> photoUrls;
 
-    @UpdateTimestamp
-    private LocalDateTime updatedAt;
+  @CreationTimestamp
+  private LocalDateTime createdAt;
+
+  @UpdateTimestamp
+  private LocalDateTime updatedAt;
 }
