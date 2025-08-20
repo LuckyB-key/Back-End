@@ -76,4 +76,15 @@ public class UserService {
             throw new RuntimeException("사용자 생성에 실패했습니다.", e);
         }
     }
+
+    @Transactional(readOnly = true)
+    public User getUserById(String userId) {
+        return userRepository.findById(userId)
+            .orElseThrow(() -> new UserNotFoundException(ErrorCode.USER_NOT_FOUND, userId));
+    }
+
+    @Transactional
+    public User saveUser(User user) {
+        return userRepository.save(user);
+    }
 } 
