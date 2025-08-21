@@ -3,6 +3,7 @@ package com.luckyb.domain.shelter.controller;
 import com.luckyb.domain.shelter.dto.*;
 import com.luckyb.domain.shelter.service.ShelterService;
 import com.luckyb.domain.shelter.service.AiShelterService;
+import com.luckyb.global.ai.AiService;
 import com.luckyb.global.common.ApiResponse;
 import com.luckyb.global.exception.ErrorCode;
 import com.luckyb.global.exception.InvalidTokenException;
@@ -12,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -22,6 +24,7 @@ public class ShelterController {
   private final ShelterService shelterService;
   private final AiShelterService aiShelterService;
   private final JwtTokenProvider jwtTokenProvider;
+  private final AiService aiService;
 
   /**
    * 쉼터 목록 조회 (위치 기반)
@@ -136,6 +139,18 @@ public class ShelterController {
 
     CongestionResponse response = aiShelterService.predictCongestion(shelterId, request);
     return ApiResponse.success(response);
+  }
+
+  /**
+   * AI 맞춤형 알림 추천
+   */
+  @GetMapping("/notifications/ai-recommendations")
+  public ApiResponse<List<Map<String, Object>>> getAiNotificationRecommendations(
+      @RequestParam Double latitude,
+      @RequestParam Double longitude
+  ) {
+    List<Map<String, Object>> recommendations = aiService.recommendNotifications(latitude, longitude);
+    return ApiResponse.success(recommendations);
   }
 
   @PutMapping("/{shelterId}/like")

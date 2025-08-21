@@ -74,12 +74,13 @@ public class OpenAiService implements AiService {
     }
     
     @Override
-    public List<Map<String, Object>> recommendShelters(double lat, double lng, List<String> preferences, String category) {
+    public List<Map<String, Object>> recommendShelters(double lat, double lng, String[] preferences, String category) {
+        String preferencesStr = preferences != null ? String.join(", ", preferences) : "";
         String prompt = String.format(
             "위도 %.6f, 경도 %.6f 위치에서 %s 카테고리의 쉼터를 추천해주세요. " +
-            "선호 시설: %s. " +
-            "JSON 형태로 응답해주세요: [{\"id\": \"shelter_id\", \"name\": \"쉼터명\", \"distance\": 0.5, \"status\": \"한산함\", \"facilities\": [\"냉방기\"], \"predictedCongestion\": \"한산함\"}]",
-            lat, lng, category, String.join(", ", preferences)
+            "선호 시설: %s. 거리, 혼잡도, 시설 등을 고려해주세요. " +
+            "JSON 형태로 응답해주세요: [{\"id\": \"shelter1\", \"name\": \"시립도서관\", \"distance\": 0.5, \"status\": \"한산함\", \"facilities\": [\"냉방기\", \"휠체어 접근\"], \"predictedCongestion\": \"낮음\"}]",
+            lat, lng, category != null ? category : "일반", preferencesStr
         );
         
         String response = generateText(prompt);
@@ -87,7 +88,25 @@ public class OpenAiService implements AiService {
             return objectMapper.readValue(response, List.class);
         } catch (Exception e) {
             log.error("쉼터 추천 응답 파싱 오류", e);
-            return new ArrayList<>();
+            // 기본 쉼터 반환
+            return List.of(
+                Map.of(
+                    "id", "shelter1",
+                    "name", "가까운 무더위 쉼터",
+                    "distance", 0.3,
+                    "status", "한산함",
+                    "facilities", List.of("냉방기", "정수기"),
+                    "predictedCongestion", "낮음"
+                ),
+                Map.of(
+                    "id", "shelter2",
+                    "name", "지역 커뮤니티 센터",
+                    "distance", 0.8,
+                    "status", "보통",
+                    "facilities", List.of("냉방기", "휠체어 접근", "의자"),
+                    "predictedCongestion", "보통"
+                )
+            );
         }
     }
     
@@ -117,8 +136,9 @@ public class OpenAiService implements AiService {
     @Override
     public List<Map<String, Object>> recommendAdvertisements(double lat, double lng, String userId) {
         String prompt = String.format(
-            "위도 %.6f, 경도 %.6f 위치에서 사용자 ID %s를 위한 맞춤 광고를 추천해주세요. " +
-            "JSON 형태로 응답해주세요: [{\"id\": \"ad_001\", \"ad_type\": \"location_based\", \"content\": \"가까운 무더위 쉼터 안내\", \"businessName\": \"서울시청\", \"image\": \"https://example.com/image.jpg\"}]",
+            "위도 %.6f, 경도 %.6f 위치에서 사용자 ID %s를 위한 맞춤형 광고를 추천해주세요. " +
+            "현지 비즈니스, 프로모션, 이벤트 등을 포함해주세요. " +
+            "JSON 형태로 응답해주세요: [{\"id\": \"ad1\", \"ad_type\": \"location_based\", \"content\": \"현재 위치 근처 맛집 할인 이벤트\", \"businessName\": \"맛집체인\", \"image\": \"https://example.com/ad1.jpg\"}]",
             lat, lng, userId != null ? userId : "anonymous"
         );
         
@@ -127,7 +147,55 @@ public class OpenAiService implements AiService {
             return objectMapper.readValue(response, List.class);
         } catch (Exception e) {
             log.error("광고 추천 응답 파싱 오류", e);
-            return new ArrayList<>();
+            // 기본 광고 반환
+            return List.of(
+                Map.of(
+                    "id", "ad1",
+                    "ad_type", "location_based",
+                    "content", "현재 위치 근처 무더위 쉼터 안내",
+                    "businessName", "Lucky B-Key",
+                    "image", "https://example.com/shelter-ad.jpg"
+                ),
+                Map.of(
+                    "id", "ad2",
+                    "ad_type", "banner",
+                    "content", "무더위 대비 건강 관리 팁",
+                    "businessName", "건강관리센터",
+                    "image", "https://example.com/health-ad.jpg"
+                )
+            );
+        }
+    }
+    
+    @Override
+    public List<Map<String, Object>> recommendNotifications(double latitude, double longitude) {
+        String prompt = String.format(
+            "위도 %.6f, 경도 %.6f 위치에서 사용자를 위한 맞춤형 알림을 추천해주세요. " +
+            "무더위 쉼터 안내, 날씨 알림, 건강 주의사항 등을 포함해주세요. " +
+            "JSON 형태로 응답해주세요: [{\"notificationId\": 101, \"title\": \"가까운 무더위 쉼터 안내\", \"content\": \"현재 위치에서 500m 거리에 혼잡도가 낮은 쉼터가 있습니다.\", \"type\": \"SHELTER_ALERT\"}, {\"notificationId\": 102, \"title\": \"폭염 주의 알림\", \"content\": \"오늘 오후 2시~5시 기온이 35도 이상 예상됩니다. 외출 시 주의하세요.\", \"type\": \"WEATHER_ALERT\"}]",
+            latitude, longitude
+        );
+        
+        String response = generateText(prompt);
+        try {
+            return objectMapper.readValue(response, List.class);
+        } catch (Exception e) {
+            log.error("알림 추천 응답 파싱 오류", e);
+            // 기본 알림 반환
+            return List.of(
+                Map.of(
+                    "notificationId", 101,
+                    "title", "무더위 쉼터 안내",
+                    "content", "현재 위치 주변의 무더위 쉼터를 확인해보세요.",
+                    "type", "SHELTER_ALERT"
+                ),
+                Map.of(
+                    "notificationId", 102,
+                    "title", "건강 주의사항",
+                    "content", "무더위 시기에는 충분한 수분 섭취와 휴식을 취하세요.",
+                    "type", "HEALTH_ALERT"
+                )
+            );
         }
     }
     
