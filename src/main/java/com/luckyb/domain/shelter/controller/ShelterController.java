@@ -170,4 +170,12 @@ public class ShelterController {
     return ApiResponse.success("좋아요 토글 완료");
   }
 
+  @GetMapping("/{shelterId}/likes")
+  public ApiResponse<List<String>> getShelterLikes(
+      @PathVariable String shelterId
+  ) {
+    List<String> nicknames = shelterService.getShelterLikeUsers(shelterId);
+    return ApiResponse.success(nicknames);
+  }
+
 }

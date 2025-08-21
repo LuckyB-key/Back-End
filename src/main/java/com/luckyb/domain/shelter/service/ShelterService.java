@@ -273,11 +273,9 @@ public class ShelterService {
     boolean alreadyLiked = likeRepository.existsByShelterAndUser(shelter, user);
 
     if (alreadyLiked) {
-      // 이미 좋아요 상태라면 취소
       shelter.setLikeCount(shelter.getLikeCount() - 1);
       likeRepository.deleteByShelterAndUser(shelter, user);
     } else {
-      // 좋아요 추가
       shelter.setLikeCount(shelter.getLikeCount() + 1);
       Like like = new Like();
       like.setShelter(shelter);
@@ -288,6 +286,13 @@ public class ShelterService {
     }
 
     shelterRepository.save(shelter);
+  }
+
+  public List<String> getShelterLikeUsers(String shelterId) {
+    return likeRepository.findByShelter_ShelterId(shelterId)
+        .stream()
+        .map(like -> like.getUser().getNickname())
+        .toList();
   }
 
   // === Private Helper Methods ===
