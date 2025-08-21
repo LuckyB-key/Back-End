@@ -13,7 +13,7 @@ public interface AiService {
     /**
      * 쉼터 추천을 위한 AI 분석
      */
-    List<Map<String, Object>> recommendShelters(double lat, double lng, List<String> preferences, String category);
+    List<Map<String, Object>> recommendShelters(double lat, double lng, String[] preferences, String category);
     
     /**
      * 혼잡도 예측을 위한 AI 분석
@@ -21,9 +21,14 @@ public interface AiService {
     Map<String, Object> predictCongestion(String shelterId, String date, String time);
     
     /**
-     * 맞춤 광고 추천을 위한 AI 분석
+     * 맞춤형 광고 추천을 위한 AI 분석
      */
     List<Map<String, Object>> recommendAdvertisements(double lat, double lng, String userId);
+    
+    /**
+     * 맞춤형 알림 추천을 위한 AI 분석
+     */
+    List<Map<String, Object>> recommendNotifications(double latitude, double longitude);
     
 
 } 

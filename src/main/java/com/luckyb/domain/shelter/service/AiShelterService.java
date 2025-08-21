@@ -25,10 +25,14 @@ public class AiShelterService {
             log.info("AI 쉼터 추천 요청: lat={}, lng={}, preferences={}, category={}", 
                     request.getLat(), request.getLng(), request.getPreferences(), request.getCategory());
             
+            // List<String>을 String[]로 변환
+            String[] preferencesArray = request.getPreferences() != null ? 
+                request.getPreferences().toArray(new String[0]) : null;
+            
             List<Map<String, Object>> aiRecommendations = aiService.recommendShelters(
                     request.getLat(), 
                     request.getLng(), 
-                    request.getPreferences(), 
+                    preferencesArray, 
                     request.getCategory()
             );
             
