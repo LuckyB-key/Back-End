@@ -9,14 +9,19 @@ import java.util.List;
 @Getter
 @Builder
 public class AnnouncementListResponse {
-    private List<AnnouncementItem> data;
 
-    @Getter
-    @Builder
-    public static class AnnouncementItem {
-        private String announcementId;
-        private String title;
-        private String content;
-        private LocalDateTime createdAt;
-    }
+  private List<AnnouncementItem> data;
+
+  @Getter
+  @Builder
+  public static class AnnouncementItem {
+
+    private String announcementId;
+    private String title;
+    private String content;
+    private String imageUrl;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
+  }
 } 
