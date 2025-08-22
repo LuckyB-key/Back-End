@@ -6,10 +6,10 @@ spring:
     name: lucky-b-key
   
   datasource:
-    url: jdbc:mariadb://localhost:3306/lucky_b_key?serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
-    username: ${DB_USERNAME:root}
-    password: ${DB_PASSWORD:password}
-    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/lucky_b_key?serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&useSSL=false&connectExpiredPassword=true
+    username: ${DB_USERNAME:luckybuser}
+    password: ${DB_PASSWORD:hackathon123!}
+    driver-class-name: com.mysql.cj.jdbc.Driver
   
   jpa:
     hibernate:
@@ -17,7 +17,7 @@ spring:
     show-sql: true
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MariaDBDialect
+        dialect: org.hibernate.dialect.MySQLDialect
         format_sql: true
     defer-datasource-initialization: false
   

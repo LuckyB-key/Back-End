@@ -38,8 +38,12 @@ dependencies {
     // ELASTICSEARCH
     implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
 
-    // Database - MariaDB
-    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+    // Database - MySQL
+    runtimeOnly 'com.mysql:mysql-connector-j:8.1.0'
+    
+    // QR Code generation
+    implementation 'com.google.zxing:core:3.5.2'
+    implementation 'com.google.zxing:javase:3.5.2'
     
     // Development tools
     compileOnly 'org.projectlombok:lombok'
