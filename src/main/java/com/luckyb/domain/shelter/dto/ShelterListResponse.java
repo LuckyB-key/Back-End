@@ -12,6 +12,7 @@ public class ShelterListResponse {
     private String name;
     private String address;
     private Double distance;              // 백엔드가 카카오맵 API로 계산한 거리
+    private String imageUrl;
     private String status;
     private String predictedCongestion;
     private CoordinatesDto coordinates;   // 지도에 쉼터 마커를 표시할 좌표
@@ -22,6 +23,7 @@ public class ShelterListResponse {
             shelter.getName(),
             buildAddressString(shelter),
             distance,
+            shelter.getImageUrl(),
             shelter.getStatus().name(),
             predictedCongestion,
             CoordinatesDto.from(shelter.getCoordinates())
