@@ -9,11 +9,13 @@ import java.io.IOException;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
+@ConditionalOnProperty(name = "cloud.aws.credentials.access-key", havingValue = "true", matchIfMissing = false)
 public class S3Service {
 
   private final AmazonS3 amazonS3;

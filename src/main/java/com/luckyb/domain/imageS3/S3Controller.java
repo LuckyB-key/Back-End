@@ -1,6 +1,7 @@
   package com.luckyb.domain.imageS3;
 
   import lombok.RequiredArgsConstructor;
+  import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
   import org.springframework.http.ResponseEntity;
   import org.springframework.web.bind.annotation.PostMapping;
   import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +12,7 @@
   @RestController
   @RequiredArgsConstructor
   @RequestMapping("/api/v1")
+  @ConditionalOnProperty(name = "cloud.aws.credentials.access-key", havingValue = "true", matchIfMissing = false)
   public class S3Controller {
 
     private final S3Service s3Service;
