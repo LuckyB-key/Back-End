@@ -40,6 +40,9 @@ public class SecurityConfig {
                         .requestMatchers("/actuator/**").permitAll()
                         .requestMatchers("/api/v1/shelters/**").permitAll()
                         
+                        // Swagger UI 경로 허용
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
+                        
                         // 사용자 관련 API는 인증 필요 (현재는 컨트롤러에서 수동 검증)
                         .requestMatchers("/api/v1/users/**").permitAll()
                         
