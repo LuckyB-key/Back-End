@@ -15,6 +15,7 @@ public class ShelterDetailResponse {
     private AddressDto address;
     private CoordinatesDto coordinates;
     private String type;
+    private String imageUrl;
     private Integer capacity;
     private List<String> facilities;
     private String operatingHours;
@@ -29,6 +30,7 @@ public class ShelterDetailResponse {
             AddressDto.from(shelter.getAddress()),
             CoordinatesDto.from(shelter.getCoordinates()),
             shelter.getType().name(),
+            shelter.getImageUrl(),
             shelter.getCapacity(),
             shelter.getFacilities(),
             shelter.getOperatingHours(),
