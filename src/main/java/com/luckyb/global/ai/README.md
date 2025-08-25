@@ -24,27 +24,28 @@ global/ai/
 
 ```java
 public interface AiService {
-    
-    /**
-     * OpenAI API를 사용하여 텍스트 생성
-     */
-    String generateText(String prompt);
-    
-    /**
-     * 쉼터 추천을 위한 AI 분석
-     */
-    List<Map<String, Object>> recommendShelters(double lat, double lng, List<String> preferences, String category);
-    
-    /**
-     * 혼잡도 예측을 위한 AI 분석
-     */
-    Map<String, Object> predictCongestion(String shelterId, String date, String time);
-    
-    /**
-     * 맞춤 광고 추천을 위한 AI 분석
-     */
-    List<Map<String, Object>> recommendAdvertisements(double lat, double lng, String userId);
-    
+
+  /**
+   * OpenAI API를 사용하여 텍스트 생성
+   */
+  String generateText(String prompt);
+
+  /**
+   * 쉼터 추천을 위한 AI 분석
+   */
+  List<Map<String, Object>> recommendShelters(double lat, double lng, List<String> preferences,
+      String category);
+
+  /**
+   * 혼잡도 예측을 위한 AI 분석
+   */
+  Map<String, Object> predictCongestion(String shelterId, String date, String time);
+
+  /**
+   * 맞춤 광고 추천을 위한 AI 분석
+   */
+  List<Map<String, Object>> recommendAdvertisements(double lat, double lng, String userId);
+
 
 }
 ```
@@ -92,8 +93,6 @@ JSON 형태로 응답해주세요: {"status": "한산함", "currentOccupancy": 1
 JSON 형태로 응답해주세요: [{"id": "ad_001", "ad_type": "location_based", "content": "가까운 무더위 쉼터 안내", "businessName": "서울시청", "image": "https://example.com/image.jpg"}]
 ```
 
-
-
 ## 🔒 보안 고려사항
 
 - **API 키 보안**: OpenAI API 키는 환경변수로 관리
@@ -120,17 +119,18 @@ JSON 형태로 응답해주세요: [{"id": "ad_001", "ad_type": "location_based"
 ### 단위 테스트
 
 ```java
+
 @SpringBootTest
 class OpenAiServiceTest {
-    
-    @Autowired
-    private AiService aiService;
-    
-    @Test
-    void testGenerateText() {
-        String response = aiService.generateText("테스트 프롬프트");
-        assertNotNull(response);
-    }
+
+  @Autowired
+  private AiService aiService;
+
+  @Test
+  void testGenerateText() {
+    String response = aiService.generateText("테스트 프롬프트");
+    assertNotNull(response);
+  }
 }
 ```
 

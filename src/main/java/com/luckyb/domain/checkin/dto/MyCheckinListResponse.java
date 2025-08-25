@@ -13,17 +13,19 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MyCheckinListResponse {
-    private List<CheckinRecord> data;
 
-    @Getter
-    @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class CheckinRecord {
-        private String checkinId;
-        private String shelterId;
-        private String shelterName;
-        private String checkinTime;
-        private String checkoutTime;
-    }
+  private List<CheckinRecord> data;
+
+  @Getter
+  @Builder
+  @NoArgsConstructor
+  @AllArgsConstructor
+  public static class CheckinRecord {
+
+    private String checkinId;
+    private String shelterId;
+    private String shelterName;
+    private String checkinTime;
+    private String checkoutTime;
+  }
 } 

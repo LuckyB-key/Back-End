@@ -8,14 +8,16 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class ReviewDeleteResponse {
-    private  boolean success;
-    private DeleteData data;
 
-    @Getter
-    @Setter
-    @AllArgsConstructor
-    public static class DeleteData{
-        private  String message;
-    }
+  private boolean success;
+  private DeleteData data;
+
+  @Getter
+  @Setter
+  @AllArgsConstructor
+  public static class DeleteData {
+
+    private String message;
+  }
 
 }

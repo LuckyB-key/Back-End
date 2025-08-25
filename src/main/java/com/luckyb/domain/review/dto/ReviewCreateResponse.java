@@ -12,21 +12,22 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class ReviewCreateResponse {
 
-    private boolean success;
-    private ReviewData data;
+  private boolean success;
+  private ReviewData data;
 
-    @Getter
-    @Builder
-    @AllArgsConstructor
-    public static class ReviewData {
-        private String id;
-        private String shelterId;
-        private  String userNickname;
-        private String userId;
-        private String text;
-        private int rating;
-        private LocalDateTime createdAt;
-        private LocalDateTime updatedAt;
+  @Getter
+  @Builder
+  @AllArgsConstructor
+  public static class ReviewData {
 
-    }
+    private String id;
+    private String shelterId;
+    private String userNickname;
+    private String userId;
+    private String text;
+    private int rating;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
+  }
 }

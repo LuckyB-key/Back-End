@@ -19,36 +19,36 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 public class Checkin {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "user_id", nullable = false)
+  private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "shelter_id", nullable = false)
-    private Shelter shelter;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "shelter_id", nullable = false)
+  private Shelter shelter;
 
-    @Column(name = "checkin_time", nullable = false)
-    @CreatedDate
-    private LocalDateTime checkinTime;
+  @Column(name = "checkin_time", nullable = false)
+  @CreatedDate
+  private LocalDateTime checkinTime;
 
-    @Column(name = "checkout_time")
-    private LocalDateTime checkoutTime;
+  @Column(name = "checkout_time")
+  private LocalDateTime checkoutTime;
 
-    @Builder
-    public Checkin(User user, Shelter shelter) {
-        this.user = user;
-        this.shelter = shelter;
-    }
+  @Builder
+  public Checkin(User user, Shelter shelter) {
+    this.user = user;
+    this.shelter = shelter;
+  }
 
-    public void checkout() {
-        this.checkoutTime = LocalDateTime.now();
-    }
+  public void checkout() {
+    this.checkoutTime = LocalDateTime.now();
+  }
 
-    public boolean isCheckedOut() {
-        return this.checkoutTime != null;
-    }
+  public boolean isCheckedOut() {
+    return this.checkoutTime != null;
+  }
 } 

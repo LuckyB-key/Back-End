@@ -6,11 +6,11 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class ShelterDeleteResponse {
-    
-    private String id;
-    private String message;
-    
-    public static ShelterDeleteResponse of(String id, String message) {
-        return new ShelterDeleteResponse(id, message);
-    }
+
+  private String id;
+  private String message;
+
+  public static ShelterDeleteResponse of(String id, String message) {
+    return new ShelterDeleteResponse(id, message);
+  }
 } 

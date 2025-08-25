@@ -8,9 +8,9 @@
 ---
 
 ### 1. 리뷰 작성
+
 * #### URL:  `Post /api/v1/shelters/{shelterId}/reviews`
 * #### Description: 새로운 리뷰를 등록합니다.
-
 
 ### Request Body:
 
@@ -24,11 +24,12 @@
     "https://example.com/photo1.jpg",
     "https://example.com/photo2.jpg"
   ]
-
 }
 
 ```
+
 ### Response:
+
 ```json
 {
   "success": true,
@@ -45,13 +46,10 @@
 }
 ```
 
-
-
-
 ### 2. 리뷰 수정
+
 * #### URL:  `PUT /api/v1/reviews/{reviewId} `
 * #### Description: 기존의 리뷰를 수정합니다.
-
 
 ### Request Body:
 
@@ -66,7 +64,9 @@
 }
 
 ```
+
 ### Response:
+
 ```json
 {
   "success": true,
@@ -80,12 +80,10 @@
 }
 ```
 
-
-### 3. 리뷰 삭제 
+### 3. 리뷰 삭제
 
 * #### URL:  `DELETE /api/v1/reviews/{reviewId} `
 * #### Description: 리뷰를 삭제합니다.
-
 
 ### Response Body:
 
@@ -99,7 +97,6 @@
 
 ```
 
-
 ### 4. 리뷰 목록 조회
 
 * #### URL:  `GET /api/v1/shelters/{shelterId}/reviews `
@@ -110,9 +107,8 @@
 * #### `page` (optional): 페이지 번호 (기본값: 0)
 * #### `size` (optional): 페이지 크기 (기본값: 10)
 
-
-
 ### Response:
+
 ```json
  {
   "id": "3",
@@ -128,13 +124,10 @@
 }
 ```
 
-
-
 ### 5. 내 리뷰 목록 조회(특정 사용자)
 
 * #### URL:  `GET "/api/v1/users/{userId}/reviews" `
 * #### Description: 특정 사용자의 리뷰 목록을  페이징하여 조회합니다.
-
 
 ### Request Body:
 
@@ -143,11 +136,8 @@
 * #### `page` (optional): 페이지 번호 (기본값: 0)
 * #### `size` (optional): 페이지 크기 (기본값: 10)
 
-
-
-
-
 ### Response:
+
 ```json
 {
   "success": true,
@@ -169,6 +159,7 @@
 ```
 
 ---
+
 ## 🗂️ 도메인 구조
 
 ---
@@ -200,23 +191,26 @@ review
 ---
 
 ### 1. CRUD 작업
-*  Create: 새로운 리뷰 등록
-*  Read: 리뷰 전체 목록 조회 및 특정 사용자 리뷰 조회
-*  Update:  기존의 리뷰 수정 
-*  Delete: 리뷰 삭제
+
+* Create: 새로운 리뷰 등록
+* Read: 리뷰 전체 목록 조회 및 특정 사용자 리뷰 조회
+* Update:  기존의 리뷰 수정
+* Delete: 리뷰 삭제
 
 ### 2. 페이징 지원
-*  목록 조회 시 페이지 단위로 데이터 제공    
-*  기존 페이지 크기: 10개 
+
+* 목록 조회 시 페이지 단위로 데이터 제공
+* 기존 페이지 크기: 10개
 * 페이지 번호는 0부터 시작
 
 ### 3. 자동 타임스탬프
+
 * createdAt: 생성 시간(자동 설정)
 * updatedAt: 수정 시간 (자동 업데이트)
 
 ---
 
-## 📜 사용 예시 
+## 📜 사용 예시
 
 ---
 
@@ -265,8 +259,7 @@ review
 }
 ```
 
-
-### 4. 리뷰 삭제 
+### 4. 리뷰 삭제
 
 ```json{
     DELETE /api/v1/reviews/{reviewId}
@@ -277,6 +270,7 @@ review
 ## 🔒 보안 고려사항
 
 ---
+
 * #### 현재는 인증/인가 없이 모든 API 접근 가능
 * #### 향후 관리자 권한 체크 추가 필요
 * #### 작성자 정보는 현재 요청에서 받지만, 실제로는 인증된 사용자 정보 사용 권장

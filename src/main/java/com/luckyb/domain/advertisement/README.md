@@ -35,11 +35,13 @@ domain/advertisement/
 **경로**: `GET /api/v1/advertisements/ai-recommendations`
 
 **요청 파라미터**:
+
 - `lat` (필수): 위도 (Double)
 - `lng` (필수): 경도 (Double)
 - `userId` (선택): 사용자 ID (String)
 
 **응답 예시**:
+
 ```json
 {
   "success": true,
@@ -59,24 +61,29 @@ domain/advertisement/
 ### 광고 관리 API
 
 #### 광고 등록
+
 - **경로**: `POST /api/v1/advertisements`
 - **요청**: `AdvertisementRequest`
 - **응답**: `AdvertisementResponse`
 
 #### 광고 수정
+
 - **경로**: `PUT /api/v1/advertisements/{id}`
 - **요청**: `AdvertisementRequest`
 - **응답**: `AdvertisementResponse`
 
 #### 광고 조회
+
 - **경로**: `GET /api/v1/advertisements/{id}`
 - **응답**: `AdvertisementResponse`
 
 #### 광고 목록 조회
+
 - **경로**: `GET /api/v1/advertisements`
 - **응답**: `Page<AdvertisementResponse>`
 
 #### 광고 삭제
+
 - **경로**: `DELETE /api/v1/advertisements/{id}`
 - **응답**: `ApiResponse<String>`
 
@@ -106,11 +113,13 @@ curl -X POST "http://localhost:8080/api/v1/advertisements" \
 ## 🤖 AI 기능
 
 ### OpenAI 통합
+
 - **모델**: GPT-3.5-turbo
 - **프롬프트**: 위치 기반 맞춤 광고 생성
 - **응답 형식**: JSON 구조화된 광고 데이터
 
 ### 에러 처리
+
 - AI 서비스 실패 시 기본 광고 반환
 - 안전한 데이터 매핑
 - 상세한 로그 기록
@@ -118,27 +127,32 @@ curl -X POST "http://localhost:8080/api/v1/advertisements" \
 ## 📊 데이터 모델
 
 ### Advertisement 엔티티
+
 ```java
+
 @Entity
 public class Advertisement {
-    private Long id;
-    private User user;
-    private String title;
-    private String content;
-    private String image;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+
+  private Long id;
+  private User user;
+  private String title;
+  private String content;
+  private String image;
+  private LocalDateTime createdAt;
+  private LocalDateTime updatedAt;
 }
 ```
 
 ### AdListResponse DTO
+
 ```java
 public class AdListResponse {
-    private String id;
-    private String adType;        // "banner", "location_based"
-    private String content;
-    private String businessName;
-    private String image;
+
+  private String id;
+  private String adType;        // "banner", "location_based"
+  private String content;
+  private String businessName;
+  private String image;
 }
 ```
 

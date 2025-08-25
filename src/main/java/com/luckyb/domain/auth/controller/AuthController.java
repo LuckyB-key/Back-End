@@ -17,30 +17,30 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final UserService userService;
-    private final JwtTokenProvider jwtTokenProvider;
+  private final UserService userService;
+  private final JwtTokenProvider jwtTokenProvider;
 
-    /**
-     * UUID 최초 생성 및 로그인
-     */
-    @PostMapping("/uuid")
-    public ApiResponse<UuidLoginResponse> createUuidAndLogin() {
-        try {
-            // 새 사용자 생성
-            User user = userService.createUser();
-            
-            // JWT 토큰 생성
-            String accessToken = jwtTokenProvider.generateToken(user.getUserId());
-            
-            // 응답 생성
-            UuidLoginResponse response = UuidLoginResponse.of(user.getUserId(), accessToken);
-            
-            log.info("새 사용자 UUID 생성 및 로그인 완료. userId: {}", user.getUserId());
-            return ApiResponse.success(response);
-            
-        } catch (Exception e) {
-            log.error("UUID 생성 및 로그인 중 오류 발생: {}", e.getMessage(), e);
-            return ApiResponse.error("UUID 생성에 실패했습니다: " + e.getMessage());
-        }
+  /**
+   * UUID 최초 생성 및 로그인
+   */
+  @PostMapping("/uuid")
+  public ApiResponse<UuidLoginResponse> createUuidAndLogin() {
+    try {
+      // 새 사용자 생성
+      User user = userService.createUser();
+
+      // JWT 토큰 생성
+      String accessToken = jwtTokenProvider.generateToken(user.getUserId());
+
+      // 응답 생성
+      UuidLoginResponse response = UuidLoginResponse.of(user.getUserId(), accessToken);
+
+      log.info("새 사용자 UUID 생성 및 로그인 완료. userId: {}", user.getUserId());
+      return ApiResponse.success(response);
+
+    } catch (Exception e) {
+      log.error("UUID 생성 및 로그인 중 오류 발생: {}", e.getMessage(), e);
+      return ApiResponse.error("UUID 생성에 실패했습니다: " + e.getMessage());
     }
+  }
 } 

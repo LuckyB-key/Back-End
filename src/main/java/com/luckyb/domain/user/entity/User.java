@@ -21,79 +21,79 @@ import java.util.UUID;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class User {
 
-    @Id
-    @Column(name = "user_id", updatable = false, nullable = false)
-    private String userId;
+  @Id
+  @Column(name = "user_id", updatable = false, nullable = false)
+  private String userId;
 
-    @Column(name = "nickname", length = 50)
-    private String nickname;
+  @Column(name = "nickname", length = 50)
+  private String nickname;
 
-    @Column(name = "email", length = 100)
-    private String email;
+  @Column(name = "email", length = 100)
+  private String email;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "role", nullable = false)
-    private UserRole role;
+  @Enumerated(EnumType.STRING)
+  @Column(name = "role", nullable = false)
+  private UserRole role;
 
-    @Setter
-    private boolean alarmEnabled;
+  @Setter
+  private boolean alarmEnabled;
 
-    @ElementCollection(fetch = FetchType.LAZY)
-    @CollectionTable(
-        name = "user_preferences",
-        joinColumns = @JoinColumn(name = "user_id")
-    )
-    @Column(name = "preference")
-    private List<String> preferences = new ArrayList<>();
+  @ElementCollection(fetch = FetchType.LAZY)
+  @CollectionTable(
+      name = "user_preferences",
+      joinColumns = @JoinColumn(name = "user_id")
+  )
+  @Column(name = "preference")
+  private List<String> preferences = new ArrayList<>();
 
-    @CreationTimestamp
-    @Column(name = "created_at", updatable = false)
-    private LocalDateTime createdAt;
+  @CreationTimestamp
+  @Column(name = "created_at", updatable = false)
+  private LocalDateTime createdAt;
 
-    @UpdateTimestamp
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+  @UpdateTimestamp
+  @Column(name = "updated_at")
+  private LocalDateTime updatedAt;
 
-    @Builder
-    public User(String nickname, String email, UserRole role, List<String> preferences) {
-        this.userId = UUID.randomUUID().toString();
-        this.nickname = nickname;
-        this.email = email;
-        this.role = role != null ? role : UserRole.USER;
-        this.preferences = preferences != null ? preferences : new ArrayList<>();
+  @Builder
+  public User(String nickname, String email, UserRole role, List<String> preferences) {
+    this.userId = UUID.randomUUID().toString();
+    this.nickname = nickname;
+    this.email = email;
+    this.role = role != null ? role : UserRole.USER;
+    this.preferences = preferences != null ? preferences : new ArrayList<>();
+  }
+
+  // 기본 사용자 생성을 위한 정적 팩토리 메서드
+  public static User createDefaultUser() {
+    User user = new User();
+    user.userId = UUID.randomUUID().toString();
+    user.role = UserRole.USER;
+    user.preferences = new ArrayList<>();
+    return user;
+  }
+
+  // 수동 생성자 (디버깅용)
+  public User(UserRole role) {
+    this.userId = UUID.randomUUID().toString();
+    this.role = role != null ? role : UserRole.USER;
+    this.preferences = new ArrayList<>();
+  }
+
+  // 정보 수정 메서드
+  public void updateInfo(String nickname, String email, String role, List<String> preferences) {
+    if (nickname != null) {
+      this.nickname = nickname;
     }
-
-    // 기본 사용자 생성을 위한 정적 팩토리 메서드
-    public static User createDefaultUser() {
-        User user = new User();
-        user.userId = UUID.randomUUID().toString();
-        user.role = UserRole.USER;
-        user.preferences = new ArrayList<>();
-        return user;
+    if (email != null) {
+      this.email = email;
     }
-
-    // 수동 생성자 (디버깅용)
-    public User(UserRole role) {
-        this.userId = UUID.randomUUID().toString();
-        this.role = role != null ? role : UserRole.USER;
-        this.preferences = new ArrayList<>();
+    if (role != null) {
+      this.role = UserRole.fromValue(role);
     }
-
-    // 정보 수정 메서드
-    public void updateInfo(String nickname, String email, String role, List<String> preferences) {
-        if (nickname != null) {
-            this.nickname = nickname;
-        }
-        if (email != null) {
-            this.email = email;
-        }
-        if (role != null) {
-            this.role = UserRole.fromValue(role);
-        }
-        if (preferences != null) {
-            this.preferences = new ArrayList<>(preferences);
-        }
+    if (preferences != null) {
+      this.preferences = new ArrayList<>(preferences);
     }
+  }
 
 
 } 

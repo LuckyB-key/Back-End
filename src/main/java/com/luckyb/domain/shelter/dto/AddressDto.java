@@ -9,18 +9,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AddressDto {
-    
-    private String jibun;
-    private String road;
-    
-    public static AddressDto from(Address address) {
-        if (address == null) {
-            return null;
-        }
-        return new AddressDto(address.getJibun(), address.getRoad());
+
+  private String jibun;
+  private String road;
+
+  public static AddressDto from(Address address) {
+    if (address == null) {
+      return null;
     }
-    
-    public Address toEntity() {
-        return Address.of(jibun, road);
-    }
+    return new AddressDto(address.getJibun(), address.getRoad());
+  }
+
+  public Address toEntity() {
+    return Address.of(jibun, road);
+  }
 } 

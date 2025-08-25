@@ -12,19 +12,20 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 
 public class ReviewUpdateResponse {
-    private boolean success;
-    private ReviewData data;
 
-    @Getter
-    @Builder
-    @AllArgsConstructor
-    public static class ReviewData {
-        private String id;
-        private String text;
-        private int rating;
-        private LocalDateTime createdAt;
-        private LocalDateTime updatedAt;
-    }
+  private boolean success;
+  private ReviewData data;
 
+  @Getter
+  @Builder
+  @AllArgsConstructor
+  public static class ReviewData {
+
+    private String id;
+    private String text;
+    private int rating;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+  }
 
 }

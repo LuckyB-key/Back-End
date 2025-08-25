@@ -12,10 +12,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ShelterRecommendationResponse {
-    private String id;
-    private String name;
-    private double distance;
-    private String status;
-    private List<String> facilities;
-    private String predictedCongestion;
+
+  private String id;
+  private String name;
+  private double distance;
+  private String status;
+  private List<String> facilities;
+  private String predictedCongestion;
 } 

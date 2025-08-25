@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class LuckyBKeyApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(LuckyBKeyApplication.class, args);
-    }
+  public static void main(String[] args) {
+    SpringApplication.run(LuckyBKeyApplication.class, args);
+  }
 } 

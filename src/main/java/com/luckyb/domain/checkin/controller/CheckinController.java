@@ -15,21 +15,21 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class CheckinController {
 
-    private final CheckinService checkinService;
+  private final CheckinService checkinService;
 
-    @PostMapping("/shelters/{shelterId}/checkins")
-    public ApiResponse<CheckinResponse> checkin(
-            @AuthenticationPrincipal User user,
-            @PathVariable String shelterId) {
-        CheckinResponse response = checkinService.checkin(user, shelterId);
-        return ApiResponse.success(response);
-    }
+  @PostMapping("/shelters/{shelterId}/checkins")
+  public ApiResponse<CheckinResponse> checkin(
+      @AuthenticationPrincipal User user,
+      @PathVariable String shelterId) {
+    CheckinResponse response = checkinService.checkin(user, shelterId);
+    return ApiResponse.success(response);
+  }
 
-    @GetMapping("/users/me/checkins")
-    public ApiResponse<MyCheckinListResponse> getMyCheckins(
-            @AuthenticationPrincipal User user,
-            @ModelAttribute MyCheckinListRequest request) {
-        MyCheckinListResponse response = checkinService.getMyCheckins(user, request);
-        return ApiResponse.success(response);
-    }
+  @GetMapping("/users/me/checkins")
+  public ApiResponse<MyCheckinListResponse> getMyCheckins(
+      @AuthenticationPrincipal User user,
+      @ModelAttribute MyCheckinListRequest request) {
+    MyCheckinListResponse response = checkinService.getMyCheckins(user, request);
+    return ApiResponse.success(response);
+  }
 } 

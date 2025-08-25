@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MyCheckinListRequest {
-    private Integer page;
-    private Integer size;
+
+  private Integer page;
+  private Integer size;
 } 

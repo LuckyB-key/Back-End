@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CheckinResponse {
-    private String checkinId;
-    private String timestamp; // ISO 8601 형식
+
+  private String checkinId;
+  private String timestamp; // ISO 8601 형식
 } 

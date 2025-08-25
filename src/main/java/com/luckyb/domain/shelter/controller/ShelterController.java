@@ -149,7 +149,8 @@ public class ShelterController {
       @RequestParam Double latitude,
       @RequestParam Double longitude
   ) {
-    List<Map<String, Object>> recommendations = aiService.recommendNotifications(latitude, longitude);
+    List<Map<String, Object>> recommendations = aiService.recommendNotifications(latitude,
+        longitude);
     return ApiResponse.success(recommendations);
   }
 

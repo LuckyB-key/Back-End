@@ -9,18 +9,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CoordinatesDto {
-    
-    private Double lat;
-    private Double lng;
-    
-    public static CoordinatesDto from(Coordinates coordinates) {
-        if (coordinates == null) {
-            return null;
-        }
-        return new CoordinatesDto(coordinates.getLat(), coordinates.getLng());
+
+  private Double lat;
+  private Double lng;
+
+  public static CoordinatesDto from(Coordinates coordinates) {
+    if (coordinates == null) {
+      return null;
     }
-    
-    public Coordinates toEntity() {
-        return Coordinates.of(lat, lng);
-    }
+    return new CoordinatesDto(coordinates.getLat(), coordinates.getLng());
+  }
+
+  public Coordinates toEntity() {
+    return Coordinates.of(lat, lng);
+  }
 } 

@@ -6,5 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CouponIssueRequest {
-    private String couponId;
+
+  private String couponId;
 } 

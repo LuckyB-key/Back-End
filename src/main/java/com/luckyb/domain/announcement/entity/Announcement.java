@@ -63,7 +63,7 @@ public class Announcement {
       this.imageUrl = imageUrl;
     }
     if (updatedAt != null) {
-        this.updatedAt = LocalDateTime.now();
+      this.updatedAt = LocalDateTime.now();
     }
   }
 } 
