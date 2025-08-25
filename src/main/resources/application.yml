@@ -48,4 +48,24 @@ openai:
 logging:
   level:
     com.luckyb: debug
-    org.springframework.security: debug 
+    org.springframework.security: debug
+
+# Swagger 설정
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+  api-docs:
+    path: /v3/api-docs
+    enabled: true
+
+# AWS S3 설정 (기본값은 빈 문자열로 설정하여 S3 기능 비활성화)
+cloud:
+  aws:
+    credentials:
+      access-key: ${AWS_ACCESS_KEY:}
+      secret-key: ${AWS_SECRET_KEY:}
+    region:
+      static: ${AWS_REGION:ap-northeast-2}
+    s3:
+      bucket: ${AWS_S3_BUCKET:} 
