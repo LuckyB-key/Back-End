@@ -117,55 +117,55 @@ public class AdvertisementService {
         .updatedAt(advertisement.getUpdatedAt())
         .build();
   }
-  
+
   /**
    * AI 맞춤 광고 추천
    */
   public List<AdListResponse> getAiAdvertisements(AdListRequest request) {
     try {
-      log.info("AI 광고 추천 요청: lat={}, lng={}, userId={}", 
-              request.getLat(), request.getLng(), request.getUserId());
-      
+      log.info("AI 광고 추천 요청: lat={}, lng={}, userId={}",
+          request.getLat(), request.getLng(), request.getUserId());
+
       List<Map<String, Object>> aiRecommendations = aiService.recommendAdvertisements(
-              request.getLat(), 
-              request.getLng(), 
-              request.getUserId()
+          request.getLat(),
+          request.getLng(),
+          request.getUserId()
       );
-      
+
       if (aiRecommendations == null || aiRecommendations.isEmpty()) {
         log.warn("AI 광고 추천 결과가 비어있습니다. 기본 광고를 반환합니다.");
         return List.of(AdListResponse.builder()
-                .id("default-ad")
-                .adType("banner")
-                .content("무더위 쉼터 안내")
-                .businessName("서울시청")
-                .image("https://example.com/default-ad.jpg")
-                .build());
+            .id("default-ad")
+            .adType("banner")
+            .content("무더위 쉼터 안내")
+            .businessName("서울시청")
+            .image("https://example.com/default-ad.jpg")
+            .build());
       }
-      
+
       return aiRecommendations.stream()
-              .map(this::mapToAdListResponse)
-              .collect(Collectors.toList());
-              
+          .map(this::mapToAdListResponse)
+          .collect(Collectors.toList());
+
     } catch (Exception e) {
       log.error("AI 광고 추천 처리 중 오류 발생: {}", e.getMessage(), e);
       return List.of(AdListResponse.builder()
-              .id("error-ad")
-              .adType("banner")
-              .content("서비스 일시 중단")
-              .businessName("시스템")
-              .image("https://example.com/error-ad.jpg")
-              .build());
+          .id("error-ad")
+          .adType("banner")
+          .content("서비스 일시 중단")
+          .businessName("시스템")
+          .image("https://example.com/error-ad.jpg")
+          .build());
     }
   }
-  
+
   private AdListResponse mapToAdListResponse(Map<String, Object> aiAd) {
     return AdListResponse.builder()
-            .id((String) aiAd.getOrDefault("id", "unknown"))
-            .adType((String) aiAd.getOrDefault("ad_type", "banner"))
-            .content((String) aiAd.getOrDefault("content", "광고 내용"))
-            .businessName((String) aiAd.getOrDefault("businessName", "광고주"))
-            .image((String) aiAd.getOrDefault("image", "https://example.com/default.jpg"))
-            .build();
+        .id((String) aiAd.getOrDefault("id", "unknown"))
+        .adType((String) aiAd.getOrDefault("ad_type", "banner"))
+        .content((String) aiAd.getOrDefault("content", "광고 내용"))
+        .businessName((String) aiAd.getOrDefault("businessName", "광고주"))
+        .image((String) aiAd.getOrDefault("image", "https://example.com/default.jpg"))
+        .build();
   }
 }

@@ -5,10 +5,12 @@
 ## 📋 API 명세
 
 ### 1. 공지사항 등록
+
 - **URL**: `POST /api/v1/announcements`
 - **Description**: 새로운 공지사항을 등록합니다.
 
 **Request Body:**
+
 ```json
 {
   "title": "공지사항 제목",
@@ -18,6 +20,7 @@
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -33,10 +36,12 @@
 ```
 
 ### 2. 공지사항 수정
+
 - **URL**: `PUT /api/v1/announcements/{announcementId}`
 - **Description**: 기존 공지사항을 수정합니다.
 
 **Request Body:**
+
 ```json
 {
   "title": "수정된 제목",
@@ -45,6 +50,7 @@
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -60,14 +66,17 @@
 ```
 
 ### 3. 공지사항 목록 조회
+
 - **URL**: `GET /api/v1/announcements`
 - **Description**: 공지사항 목록을 페이징하여 조회합니다.
 
 **Query Parameters:**
+
 - `page` (optional): 페이지 번호 (기본값: 0)
 - `size` (optional): 페이지 크기 (기본값: 10)
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -85,10 +94,12 @@
 ```
 
 ### 4. 공지사항 상세 조회
+
 - **URL**: `GET /api/v1/announcements/{announcementId}`
 - **Description**: 특정 공지사항의 상세 정보를 조회합니다.
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -102,10 +113,12 @@
 ```
 
 ### 5. 공지사항 삭제
+
 - **URL**: `DELETE /api/v1/announcements/{announcementId}`
 - **Description**: 공지사항을 삭제합니다.
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -143,27 +156,32 @@ announcement/
 ## 🔧 주요 기능
 
 ### 1. CRUD 작업
+
 - **Create**: 새로운 공지사항 등록
 - **Read**: 공지사항 목록 조회 및 상세 조회
 - **Update**: 기존 공지사항 수정
 - **Delete**: 공지사항 삭제
 
 ### 2. 페이징 지원
+
 - 목록 조회 시 페이지 단위로 데이터 제공
 - 기본 페이지 크기: 10개
 - 페이지 번호는 0부터 시작
 
 ### 3. 자동 타임스탬프
+
 - `createdAt`: 생성 시간 (자동 설정)
 - `updatedAt`: 수정 시간 (자동 업데이트)
 
 ### 4. UUID 기반 ID
+
 - 각 공지사항은 고유한 UUID를 가짐
 - 보안성과 확장성 확보
 
 ## 🚨 예외 처리
 
 ### AnnouncementNotFoundException
+
 - 존재하지 않는 공지사항 ID로 조회/수정/삭제 시 발생
 - HTTP 404 상태 코드 반환
 

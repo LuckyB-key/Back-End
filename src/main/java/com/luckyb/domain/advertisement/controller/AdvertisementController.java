@@ -57,24 +57,24 @@ public class AdvertisementController {
     advertisementService.deleteAdvertisement(id);
     return ResponseEntity.ok(ApiResponse.success("광고가 정상적으로 삭제되었습니다."));
   }
-  
+
   /**
    * AI 맞춤 광고 추천
    */
   @GetMapping("/ai-recommendations")
   public ResponseEntity<ApiResponse<List<AdListResponse>>> getAiAdvertisements(
-          @RequestParam Double lat,
-          @RequestParam Double lng,
-          @RequestParam(required = false) String userId
+      @RequestParam Double lat,
+      @RequestParam Double lng,
+      @RequestParam(required = false) String userId
   ) {
     AdListRequest request = new AdListRequest();
     request.setLat(lat);
     request.setLng(lng);
     request.setUserId(userId);
-    
+
     List<AdListResponse> advertisements = advertisementService.getAiAdvertisements(request);
     log.info("AI 맞춤 광고 추천 완료: {}개 광고", advertisements.size());
-    
+
     return ResponseEntity.ok(ApiResponse.success(advertisements));
   }
 }

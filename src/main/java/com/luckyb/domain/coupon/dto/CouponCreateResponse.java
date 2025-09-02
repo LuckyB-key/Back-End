@@ -7,16 +7,16 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class CouponCreateResponse {
-    
-    private String id;
-    private String title;
-    private String businessId;
-    
-    public static CouponCreateResponse from(Coupon coupon) {
-        return new CouponCreateResponse(
-            coupon.getCouponId(),
-            coupon.getTitle(),
-            coupon.getBusinessUser().getUserId()
-        );
-    }
+
+  private String id;
+  private String title;
+  private String businessId;
+
+  public static CouponCreateResponse from(Coupon coupon) {
+    return new CouponCreateResponse(
+        coupon.getCouponId(),
+        coupon.getTitle(),
+        coupon.getBusinessUser().getUserId()
+    );
+  }
 } 

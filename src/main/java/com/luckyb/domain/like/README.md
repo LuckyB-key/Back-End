@@ -24,12 +24,14 @@ domain/like/
 ### Like 엔티티
 
 ```java
+
 @Entity
 @Table(name = "likes")
 public class Like {
-    private Long id;
-    private Shelter shelter;    // 쉼터
-    private User user;          // 사용자
+
+  private Long id;
+  private Shelter shelter;    // 쉼터
+  private User user;          // 사용자
 }
 ```
 
@@ -59,12 +61,13 @@ boolean isLiked = likeRepository.existsByUserIdAndShelterId(userId, shelterId);
 ### likes 테이블
 
 ```sql
-CREATE TABLE likes (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE likes
+(
+    id         BIGINT AUTO_INCREMENT PRIMARY KEY,
     shelter_id BIGINT NOT NULL,
-    user_id BIGINT NOT NULL,
-    FOREIGN KEY (shelter_id) REFERENCES shelters(id),
-    FOREIGN KEY (user_id) REFERENCES users(id),
+    user_id    BIGINT NOT NULL,
+    FOREIGN KEY (shelter_id) REFERENCES shelters (id),
+    FOREIGN KEY (user_id) REFERENCES users (id),
     UNIQUE KEY unique_user_shelter (user_id, shelter_id)
 );
 ```
@@ -78,11 +81,13 @@ CREATE TABLE likes (
 ## 📝 향후 확장 계획
 
 ### API 기능
+
 - 좋아요 추가/삭제 API
 - 사용자별 좋아요 목록 조회
 - 쉼터별 좋아요 통계 조회
 
 ### 비즈니스 로직
+
 - 좋아요 기반 추천 시스템
 - 인기 쉼터 랭킹
 - 사용자 선호도 분석

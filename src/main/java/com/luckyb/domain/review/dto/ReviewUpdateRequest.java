@@ -8,8 +8,9 @@ import java.util.List;
 @Getter
 @Setter
 public class ReviewUpdateRequest {
-    private String text;
-    private int rating;
-    private List<String> photoUrls;
+
+  private String text;
+  private int rating;
+  private List<String> photoUrls;
 
 }

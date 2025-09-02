@@ -6,6 +6,7 @@ import lombok.Getter;
 @Getter
 @Builder
 public class AnnouncementDeleteResponse {
-    private String message;
-    private String announcementId;
-} 
+
+  private String message;
+  private String announcementId;
+}

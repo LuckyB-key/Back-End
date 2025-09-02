@@ -11,22 +11,22 @@ import java.time.format.DateTimeFormatter;
 @Getter
 @NoArgsConstructor
 public class CouponCreateRequest {
-    
-    private String title;
-    private String description;
-    private String expiryDate; // ISO 8601 형식 문자열
-    
-    public Coupon toEntity(User businessUser) {
-        LocalDateTime parsedExpiryDate = LocalDateTime.parse(
-            expiryDate, 
-            DateTimeFormatter.ISO_LOCAL_DATE_TIME
-        );
-        
-        return Coupon.builder()
-                .title(title)
-                .description(description)
-                .expiryDate(parsedExpiryDate)
-                .businessUser(businessUser)
-                .build();
-    }
+
+  private String title;
+  private String description;
+  private String expiryDate; // ISO 8601 형식 문자열
+
+  public Coupon toEntity(User businessUser) {
+    LocalDateTime parsedExpiryDate = LocalDateTime.parse(
+        expiryDate,
+        DateTimeFormatter.ISO_LOCAL_DATE_TIME
+    );
+
+    return Coupon.builder()
+        .title(title)
+        .description(description)
+        .expiryDate(parsedExpiryDate)
+        .businessUser(businessUser)
+        .build();
+  }
 } 

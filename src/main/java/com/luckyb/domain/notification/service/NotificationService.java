@@ -65,7 +65,8 @@ public class NotificationService {
       throw new InvalidTokenException(ErrorCode.INVALID_TOKEN);
     }
 
-    notification.setReadStatus(true);    notificationRepository.save(notification);
+    notification.setReadStatus(true);
+    notificationRepository.save(notification);
   }
 
   @Transactional

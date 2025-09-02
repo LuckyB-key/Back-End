@@ -12,14 +12,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class Coordinates {
-    
-    @Column(name = "latitude", nullable = false)
-    private Double lat;
-    
-    @Column(name = "longitude", nullable = false)
-    private Double lng;
-    
-    public static Coordinates of(Double lat, Double lng) {
-        return new Coordinates(lat, lng);
-    }
+
+  @Column(name = "latitude", nullable = false)
+  private Double lat;
+
+  @Column(name = "longitude", nullable = false)
+  private Double lng;
+
+  public static Coordinates of(Double lat, Double lng) {
+    return new Coordinates(lat, lng);
+  }
 } 
